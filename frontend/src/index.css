@@ -33,22 +33,23 @@
   /* Buttons — sharp, no radius */
   .btn-primary {
     @apply bg-blue text-white font-bold uppercase tracking-wider text-sm
-           px-6 py-3 inline-block transition-all duration-100
+           px-6 py-3 inline-flex items-center gap-2 transition-all duration-100
            hover:bg-blue-hover hover:shadow-flat-blue;
   }
   .btn-secondary {
     @apply bg-transparent text-ink font-bold uppercase tracking-wider text-sm
-           px-6 py-3 inline-block border border-ink
+           px-6 py-3 inline-flex items-center gap-2 border border-ink
            transition-all duration-100
            hover:bg-ink hover:text-linen;
   }
   .btn-ghost {
     @apply bg-transparent text-ink-faint font-medium text-sm px-4 py-2
-           inline-block transition-colors duration-100 hover:text-ink;
+           inline-flex items-center gap-2
+           transition-colors duration-100 hover:text-ink;
   }
   .btn-outline-light {
     @apply bg-transparent text-linen font-bold uppercase tracking-wider text-sm
-           px-6 py-3 inline-block border border-border-dark
+           px-6 py-3 inline-flex items-center gap-2 border border-border-dark
            transition-all duration-100
            hover:bg-linen hover:text-ink;
   }

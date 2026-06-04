@@ -1,18 +1,20 @@
 """
 AnalyticaAI — Main API Router (v1)
-Only endpoints built so far are imported.
+Uncomment routers as each phase is completed.
 """
 from fastapi import APIRouter
-from app.api.v1.endpoints import auth, users
+from app.api.v1.endpoints import auth, users, datasets
 
 api_router = APIRouter()
 
-api_router.include_router(auth.router,  prefix="/auth",  tags=["Authentication"])
-api_router.include_router(users.router, prefix="/users", tags=["Users"])
+# ── Phase 0 ──
+api_router.include_router(auth.router,     prefix="/auth",     tags=["Authentication"])
+api_router.include_router(users.router,    prefix="/users",    tags=["Users"])
+
+# ── Phase 1 ──
+api_router.include_router(datasets.router, prefix="/datasets", tags=["Datasets"])
 
 # Uncomment as each phase is completed:
-# from app.api.v1.endpoints import datasets
-# api_router.include_router(datasets.router, prefix="/datasets", tags=["Datasets"])
 # from app.api.v1.endpoints import profile
 # api_router.include_router(profile.router, prefix="/datasets", tags=["Profiling"])
 # from app.api.v1.endpoints import cleaning
@@ -25,15 +27,7 @@ api_router.include_router(users.router, prefix="/users", tags=["Users"])
 # api_router.include_router(chat.router, prefix="/chat", tags=["Chat"])
 # from app.api.v1.endpoints import insights
 # api_router.include_router(insights.router, prefix="/datasets", tags=["Insights"])
-# from app.api.v1.endpoints import forecast
-# api_router.include_router(forecast.router, prefix="/forecast", tags=["Forecasting"])
-# from app.api.v1.endpoints import automl
-# api_router.include_router(automl.router, prefix="/automl", tags=["AutoML"])
 # from app.api.v1.endpoints import reports
 # api_router.include_router(reports.router, prefix="/reports", tags=["Reports"])
 # from app.api.v1.endpoints import jobs
 # api_router.include_router(jobs.router, prefix="/jobs", tags=["Jobs"])
-# from app.api.v1.endpoints import notifications
-# api_router.include_router(notifications.router, prefix="/notifications", tags=["Notifications"])
-# from app.api.v1.endpoints import search
-# api_router.include_router(search.router, prefix="/search", tags=["Search"])

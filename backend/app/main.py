@@ -4,8 +4,10 @@ AnalyticaAI — FastAPI Application Entry Point
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 import logging
+from pathlib import Path
 
 from app.core.config import settings
 from app.api.v1.router import api_router
@@ -55,6 +57,13 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 # Routes
 app.include_router(api_router, prefix="/api/v1")
+
+# Serve uploaded files locally (dev only)
+# In production, files are served from Supabase Storage directly
+if settings.STORAGE_PROVIDER == "local":
+    storage_path = Path(settings.LOCAL_STORAGE_PATH)
+    storage_path.mkdir(parents=True, exist_ok=True)
+    app.mount("/static", StaticFiles(directory=str(storage_path)), name="static")
 
 
 @app.get("/health")
