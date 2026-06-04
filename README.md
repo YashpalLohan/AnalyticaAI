@@ -47,14 +47,67 @@ AnalyticaAI is a full-stack AI-powered analytics platform that lets users upload
 ## Project Structure
 
 ```
-analytica-ai/
-├── frontend/          # React.js application
-├── backend/           # FastAPI application
-├── docs/              # Documentation and architecture docs
-├── scripts/           # Utility scripts
-├── docker/            # Docker configuration
-├── infrastructure/    # Deployment configs
-└── docker-compose.yml
+AnalyticaAI/
+│
+├── backend/                   # FastAPI application
+│   ├── app/
+│   │   ├── api/v1/
+│   │   │   ├── endpoints/     # Route handlers (auth, datasets, chat...)
+│   │   │   └── router.py      # Registers all routes
+│   │   ├── core/
+│   │   │   ├── config.py      # Settings & env vars
+│   │   │   ├── llm.py         # Groq LLM + embeddings factory
+│   │   │   └── storage.py     # Storage factory (local / Supabase)
+│   │   ├── models/            # SQLAlchemy ORM models
+│   │   ├── schemas/           # Pydantic request/response schemas
+│   │   ├── services/          # Business logic
+│   │   ├── agents/            # LangGraph agents
+│   │   ├── tasks/             # Celery background tasks
+│   │   ├── utils/             # Shared utilities
+│   │   └── main.py            # FastAPI app entry point
+│   ├── alembic/               # Database migrations
+│   ├── tests/                 # Pytest test suite
+│   ├── requirements.txt
+│   └── Dockerfile
+│
+├── frontend/                  # Next.js application
+│   ├── src/
+│   │   ├── app/               # Next.js app router pages
+│   │   ├── components/        # Shared UI components
+│   │   ├── features/          # Feature modules (auth, datasets, chat...)
+│   │   ├── services/          # API service functions
+│   │   ├── hooks/             # Custom React hooks
+│   │   ├── store/             # Zustand state stores
+│   │   ├── types/             # TypeScript type definitions
+│   │   ├── utils/             # Shared utilities
+│   │   └── lib/
+│   │       └── api-client.ts  # Axios instance with auth interceptors
+│   ├── public/                # Static assets
+│   ├── package.json
+│   └── Dockerfile
+│
+├── docs/                      # All project documentation
+│   ├── 01-Product/            # PRD, App Flow, UI/UX Brief
+│   ├── 02-Engineering/        # TRD, Architecture, DB Design, Agent Architecture
+│   ├── 03-Execution/          # API Spec, MVP Roadmap, Sprints, Deployment Guide
+│   ├── 04-Portfolio/          # Resume Case Study
+│   ├── design-tokens/         # CSS tokens + Tailwind config
+│   ├── error-codes/           # API error code registry
+│   ├── prompts/               # LLM agent system prompts + few-shot examples
+│   ├── scaffold-guide.md      # How to use this scaffold
+│   └── context.txt            # Project context reference
+│
+├── sample-datasets/           # Test CSVs for development
+│   ├── sales_data.csv
+│   ├── customer_data.csv
+│   └── README.md
+│
+├── .github/workflows/         # CI/CD pipelines
+├── .env.example               # Environment variable reference
+├── .gitignore
+├── docker-compose.yml         # Full local dev stack
+├── CONTRIBUTING.md
+└── README.md
 ```
 
 ---
@@ -124,7 +177,7 @@ See [`.env.example`](.env.example) for all required variables.
 
 ## API Documentation
 
-Full API spec: [`docs/08-API-Specification.md`](docs/08-API-Specification.md)
+Full API spec: [`docs/03-Execution/08-API-Specification.md`](docs/03-Execution/08-API-Specification.md)
 
 Interactive docs available at `http://localhost:8000/docs` when running locally.
 
@@ -132,13 +185,13 @@ Interactive docs available at `http://localhost:8000/docs` when running locally.
 
 ## Architecture
 
-See [`docs/03-System-Architecture.md`](docs/03-System-Architecture.md) for full architecture details.
+See [`docs/02-Engineering/03-System-Architecture.md`](docs/02-Engineering/03-System-Architecture.md) for full architecture details.
 
 ---
 
 ## Development Sprints
 
-See [`docs/10-Development-Sprints.md`](docs/10-Development-Sprints.md) for the 6-week build plan.
+See [`docs/03-Execution/10-Development-Sprints.md`](docs/03-Execution/10-Development-Sprints.md) for the 6-week build plan.
 
 ---
 
