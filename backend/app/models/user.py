@@ -4,7 +4,7 @@ AnalyticaAI — User ORM Model
 import uuid
 from datetime import datetime, timezone
 from sqlalchemy import String, Boolean, DateTime
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.database import Base
 
 
@@ -25,3 +25,6 @@ class User(Base):
         default=lambda: datetime.now(timezone.utc),
         onupdate=lambda: datetime.now(timezone.utc),
     )
+
+    # Relationships
+    chat_sessions = relationship("ChatSession", back_populates="user", cascade="all, delete-orphan")

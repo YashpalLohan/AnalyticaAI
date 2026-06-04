@@ -21,6 +21,11 @@ api_router.include_router(profile.router, prefix="/datasets", tags=["Profiling"]
 # ── Phase 3 ──
 from app.api.v1.endpoints import eda
 api_router.include_router(eda.router, prefix="/datasets", tags=["EDA"])
+
+# ── Phase 4 ──
+from app.api.v1.endpoints import chat
+api_router.include_router(chat.router, prefix="/chat", tags=["Chat"])
+
 # from app.api.v1.endpoints import dashboards
 # api_router.include_router(dashboards.router, prefix="/dashboards", tags=["Dashboards"])
 # from app.api.v1.endpoints import chat

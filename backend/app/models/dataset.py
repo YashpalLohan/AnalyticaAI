@@ -43,3 +43,6 @@ class Dataset(Base):
         default=lambda: datetime.now(timezone.utc),
         onupdate=lambda: datetime.now(timezone.utc),
     )
+
+    # Relationships
+    chat_sessions = relationship("ChatSession", back_populates="dataset", cascade="all, delete-orphan")

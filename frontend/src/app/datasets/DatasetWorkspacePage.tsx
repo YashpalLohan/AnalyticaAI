@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, Loader2, RefreshCw, BarChart2, Sparkles, LayoutDashboard, FileText, TrendingUp } from 'lucide-react'
+import { ArrowLeft, Loader2, RefreshCw, BarChart2, Sparkles, LayoutDashboard, FileText, TrendingUp, MessageSquare } from 'lucide-react'
 import toast from 'react-hot-toast'
 import datasetService, { Dataset } from '../../services/dataset.service'
 import profileService, { DatasetProfile } from '../../services/profile.service'
 import OverviewTab from '../../features/profiling/OverviewTab'
 import CleaningTab from '../../features/profiling/CleaningTab'
 import EDATab from '../../features/eda/EDATab'
+import ChatTab from '../../features/chat/ChatTab'
 
 import type { LucideIcon } from 'lucide-react'
 
 // ── Tab definitions ───────────────────────────────────────────────────────
 
-type TabId = 'overview' | 'cleaning' | 'eda' | 'dashboard' | 'reports'
+type TabId = 'overview' | 'cleaning' | 'eda' | 'chat' | 'dashboard' | 'reports'
 
 interface TabDef {
   id: TabId
@@ -27,6 +28,7 @@ const TABS: TabDef[] = [
   { id: 'overview',   label: 'Overview',   icon: BarChart2,       phase: 2, available: true  },
   { id: 'cleaning',   label: 'Cleaning',   icon: Sparkles,        phase: 2, available: true  },
   { id: 'eda',        label: 'EDA',        icon: TrendingUp,      phase: 3, available: true  },
+  { id: 'chat',       label: 'Chat',       icon: MessageSquare,   phase: 4, available: true  },
   { id: 'dashboard',  label: 'Dashboard',  icon: LayoutDashboard, phase: 5, available: false },
   { id: 'reports',    label: 'Reports',    icon: FileText,        phase: 6, available: false },
 ]
@@ -282,6 +284,27 @@ export default function DatasetWorkspacePage() {
               </div>
             )}
             {profile && <EDATab datasetId={id!} />}
+          </>
+        )}
+
+        {/* Chat */}
+        {activeTab === 'chat' && (
+          <>
+            {!profile && (
+              <div className="border border-border bg-linen p-12 text-center">
+                <MessageSquare size={32} className="text-ink-faint mx-auto mb-3" />
+                <p className="font-bold text-sm uppercase tracking-wide text-ink mb-2">
+                  Profile First
+                </p>
+                <p className="text-xs text-ink-faint mb-6">
+                  Profile the dataset first to enable AI chat capabilities.
+                </p>
+                <button onClick={handleTriggerProfile} className="btn-primary text-xs py-2.5 px-6">
+                  Profile Dataset
+                </button>
+              </div>
+            )}
+            {profile && <ChatTab datasetId={id!} />}
           </>
         )}
 
