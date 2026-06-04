@@ -1,0 +1,16 @@
+customer_id,name,email,age,city,country,signup_date,total_orders,total_spent,last_order_date,status
+C001,Alice Johnson,alice@example.com,32,New York,USA,2023-01-15,45,12400,2024-01-15,active
+C002,Bob Smith,bob@example.com,28,Los Angeles,USA,2023-02-20,22,5800,2024-01-11,active
+C003,Carol White,carol@example.com,45,Chicago,USA,2023-01-08,67,18900,2024-01-15,active
+C004,David Brown,david@example.com,37,Houston,USA,2023-03-10,89,24500,2024-01-15,active
+C005,Emma Davis,emma@example.com,26,Phoenix,USA,2023-04-05,18,3200,2024-01-14,active
+C006,Frank Miller,frank@example.com,41,San Antonio,USA,2023-01-25,12,2100,2024-01-09,active
+C007,Grace Wilson,grace@example.com,35,San Diego,USA,2023-05-12,34,9800,2024-01-08,active
+C008,Henry Moore,henry@example.com,29,Dallas,USA,2023-06-18,9,1400,2024-01-06,inactive
+C009,Isabella Taylor,isabella@example.com,52,San Jose,USA,2023-02-14,78,22000,2024-01-13,active
+C010,James Anderson,james@example.com,33,Austin,USA,2023-07-22,28,7600,2024-01-12,active
+C011,Karen Thomas,karen@example.com,44,Jacksonville,USA,2023-03-30,41,11200,2024-01-01,active
+C012,Liam Jackson,liam@example.com,27,,USA,2023-08-15,5,900,2023-12-20,inactive
+C013,Mia Harris,mia@example.com,,Columbus,USA,2023-09-05,14,3600,2024-01-03,active
+C014,Noah Martin,noah@example.com,38,Charlotte,USA,2023-10-12,31,8900,2024-01-07,active
+C015,Olivia Garcia,olivia@example.com,23,Fort Worth,USA,2023-11-20,3,450,2023-11-25,inactive

@@ -1,0 +1,177 @@
+/* =============================================================
+   AnalyticaAI — Design Tokens
+   Source of truth for all UI styling decisions.
+   Import this in your global CSS or Tailwind config.
+   ============================================================= */
+
+:root {
+
+  /* -----------------------------------------------------------
+     Colors — Light Mode
+  ----------------------------------------------------------- */
+
+  /* Backgrounds */
+  --color-bg-primary:        #FFFFFF;
+  --color-bg-secondary:      #F8FAFC;
+  --color-bg-tertiary:       #F1F5F9;
+  --color-bg-overlay:        rgba(0, 0, 0, 0.5);
+
+  /* Borders */
+  --color-border-default:    #E2E8F0;
+  --color-border-strong:     #CBD5E1;
+  --color-border-focus:      #2563EB;
+
+  /* Text */
+  --color-text-primary:      #0F172A;
+  --color-text-secondary:    #64748B;
+  --color-text-tertiary:     #94A3B8;
+  --color-text-inverse:      #FFFFFF;
+  --color-text-disabled:     #CBD5E1;
+
+  /* Brand / Accent */
+  --color-accent-primary:    #2563EB;
+  --color-accent-hover:      #1D4ED8;
+  --color-accent-light:      #EFF6FF;
+  --color-accent-subtle:     #DBEAFE;
+
+  /* Semantic */
+  --color-success:           #16A34A;
+  --color-success-light:     #F0FDF4;
+  --color-warning:           #EA580C;
+  --color-warning-light:     #FFF7ED;
+  --color-error:             #DC2626;
+  --color-error-light:       #FEF2F2;
+  --color-info:              #0284C7;
+  --color-info-light:        #F0F9FF;
+
+  /* Charts / Data Visualization */
+  --color-chart-1:           #2563EB;
+  --color-chart-2:           #7C3AED;
+  --color-chart-3:           #059669;
+  --color-chart-4:           #D97706;
+  --color-chart-5:           #DC2626;
+  --color-chart-6:           #0284C7;
+  --color-chart-7:           #DB2777;
+  --color-chart-8:           #65A30D;
+
+  /* -----------------------------------------------------------
+     Typography
+  ----------------------------------------------------------- */
+
+  --font-family-primary:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-mono:        'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+
+  /* Font Sizes */
+  --font-size-xs:            12px;
+  --font-size-sm:            14px;
+  --font-size-base:          16px;
+  --font-size-lg:            18px;
+  --font-size-xl:            20px;
+  --font-size-2xl:           24px;
+  --font-size-3xl:           30px;
+  --font-size-4xl:           36px;
+  --font-size-5xl:           48px;
+
+  /* Font Weights */
+  --font-weight-regular:     400;
+  --font-weight-medium:      500;
+  --font-weight-semibold:    600;
+  --font-weight-bold:        700;
+
+  /* Line Heights */
+  --line-height-tight:       1.2;
+  --line-height-normal:      1.5;
+  --line-height-relaxed:     1.75;
+
+  /* -----------------------------------------------------------
+     Spacing Scale
+  ----------------------------------------------------------- */
+
+  --spacing-1:               4px;
+  --spacing-2:               8px;
+  --spacing-3:               12px;
+  --spacing-4:               16px;
+  --spacing-5:               20px;
+  --spacing-6:               24px;
+  --spacing-8:               32px;
+  --spacing-10:              40px;
+  --spacing-12:              48px;
+  --spacing-16:              64px;
+  --spacing-20:              80px;
+  --spacing-24:              96px;
+
+  /* -----------------------------------------------------------
+     Border Radius
+  ----------------------------------------------------------- */
+
+  --radius-sm:               4px;
+  --radius-md:               8px;
+  --radius-lg:               12px;
+  --radius-xl:               16px;
+  --radius-2xl:              24px;
+  --radius-full:             9999px;
+
+  /* -----------------------------------------------------------
+     Shadows
+  ----------------------------------------------------------- */
+
+  --shadow-sm:               0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md:               0 4px 6px rgba(0, 0, 0, 0.07);
+  --shadow-lg:               0 10px 15px rgba(0, 0, 0, 0.10);
+  --shadow-xl:               0 20px 25px rgba(0, 0, 0, 0.12);
+
+  /* -----------------------------------------------------------
+     Layout
+  ----------------------------------------------------------- */
+
+  --max-width-content:       1280px;
+  --max-width-page:          1440px;
+  --sidebar-width:           240px;
+  --navbar-height:           64px;
+
+  /* -----------------------------------------------------------
+     Z-Index Scale
+  ----------------------------------------------------------- */
+
+  --z-base:                  0;
+  --z-dropdown:              100;
+  --z-sticky:                200;
+  --z-overlay:               300;
+  --z-modal:                 400;
+  --z-toast:                 500;
+  --z-tooltip:               600;
+
+  /* -----------------------------------------------------------
+     Transitions
+  ----------------------------------------------------------- */
+
+  --transition-fast:         150ms ease;
+  --transition-normal:       250ms ease;
+  --transition-slow:         400ms ease;
+}
+
+/* =============================================================
+   Dark Mode Tokens
+   ============================================================= */
+
+[data-theme="dark"] {
+
+  --color-bg-primary:        #0F172A;
+  --color-bg-secondary:      #1E293B;
+  --color-bg-tertiary:       #334155;
+
+  --color-border-default:    #334155;
+  --color-border-strong:     #475569;
+
+  --color-text-primary:      #F8FAFC;
+  --color-text-secondary:    #94A3B8;
+  --color-text-tertiary:     #64748B;
+
+  --color-accent-light:      #1E3A5F;
+  --color-accent-subtle:     #1E3A5F;
+
+  --color-success-light:     #052E16;
+  --color-warning-light:     #431407;
+  --color-error-light:       #450A0A;
+  --color-info-light:        #082F49;
+}

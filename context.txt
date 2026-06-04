@@ -1,0 +1,248 @@
+# AnalyticaAI - Project Context.txt
+
+PROJECT NAME:
+AnalyticaAI
+
+TAGLINE:
+Talk to Your Data. Get Insights in Seconds.
+
+PROJECT TYPE:
+Agentic AI + Data Analytics + Full Stack SaaS Platform
+
+OVERVIEW:
+AnalyticaAI is an AI-powered data analysis platform that enables users to upload datasets and interact with them using natural language. The platform automatically profiles, cleans, analyzes, visualizes, and generates insights from uploaded data without requiring SQL, coding, or manual dashboard creation.
+
+The goal is to provide a ChatGPT-like experience for data analytics where users can simply upload a dataset and ask questions.
+
+TARGET USERS:
+
+* Business Analysts
+* Students
+* Startup Founders
+* Marketing Teams
+* Product Managers
+* Non-Technical Users
+
+CORE PROBLEM:
+Traditional data analysis requires multiple tools such as Excel, SQL, Python, Tableau, or Power BI. Many users struggle with data cleaning, dashboard creation, querying, and extracting insights.
+
+AnalyticaAI simplifies this process through AI-driven automation and conversational analytics.
+
+CORE FEATURES:
+
+1. Dataset Upload
+
+* CSV Upload
+* XLSX Upload
+* JSON Upload
+
+2. Automated Data Profiling
+
+* Row Count
+* Column Count
+* Missing Values
+* Duplicate Records
+* Outlier Detection
+* Dataset Health Score
+
+3. Automated Data Cleaning
+
+* Missing Value Handling
+* Duplicate Removal
+* Data Type Correction
+* Outlier Recommendations
+
+4. Exploratory Data Analysis (EDA)
+
+* Histograms
+* Correlation Heatmaps
+* Summary Statistics
+* Category Analysis
+* Trend Analysis
+
+5. AI Chat Interface
+   Users can ask:
+
+* Which product generates the most revenue?
+* Why did sales decline?
+* Show top customers.
+* Compare regions.
+* Find anomalies.
+
+6. Dashboard Generation
+   Automatically generates:
+
+* KPI Cards
+* Charts
+* Tables
+* Trend Visualizations
+
+7. Insight Generation
+   Automatically identifies:
+
+* Trends
+* Risks
+* Opportunities
+* Recommendations
+
+8. Report Generation
+   Exports:
+
+* PDF Reports
+* DOCX Reports
+
+ADVANCED FEATURES (V2):
+
+1. Forecasting
+   Models:
+
+* Prophet
+* XGBoost
+
+2. AutoML
+   Models:
+
+* Random Forest
+* XGBoost
+* LightGBM
+
+3. Anomaly Detection
+   Algorithms:
+
+* Isolation Forest
+* DBSCAN
+* Local Outlier Factor
+
+4. Multi-Agent Architecture
+   Agents:
+
+* Dataset Agent
+* Cleaning Agent
+* EDA Agent
+* Insight Agent
+* Dashboard Agent
+* ML Agent
+* Forecast Agent
+* Report Agent
+* Memory Agent
+
+TECH STACK:
+
+Frontend:
+
+* React.js
+* TypeScript
+* Tailwind CSS
+* Shadcn UI
+* Recharts
+
+Backend:
+
+* FastAPI
+* Python
+* SQLAlchemy
+
+Database:
+
+* PostgreSQL
+
+Vector Database:
+
+* ChromaDB
+
+Storage:
+
+* Supabase Storage (free tier: 1GB)
+
+AI Layer:
+
+* LangChain
+* LangGraph
+* Groq (llama-3.3-70b-versatile)
+
+Data Processing:
+
+* Pandas
+* NumPy
+
+Machine Learning:
+
+* Scikit-learn
+* XGBoost
+* LightGBM
+* Prophet
+
+Infrastructure:
+
+* Vercel
+* Render
+* Redis (Upstash)
+* Celery
+
+APPLICATION FLOW:
+
+Upload Dataset
+↓
+Dataset Profiling
+↓
+Data Cleaning
+↓
+EDA Generation
+↓
+Dashboard Generation
+↓
+AI Chat
+↓
+Insight Generation
+↓
+Report Generation
+
+MVP FEATURES:
+
+* Authentication
+* Dataset Upload
+* Dataset Profiling
+* Data Cleaning Suggestions
+* EDA Generation
+* AI Chat
+* Dashboard Generation
+* Insight Generation
+* Report Export
+
+OUT OF SCOPE FOR MVP:
+
+* AutoML
+* Forecasting
+* Anomaly Detection
+* Team Collaboration
+* Real-Time Analytics
+
+SUCCESS CRITERIA:
+
+Users should be able to:
+
+1. Upload a dataset.
+2. Automatically receive profiling results.
+3. View generated charts.
+4. Chat with the dataset.
+5. Receive AI-generated insights.
+6. Generate dashboards.
+7. Export reports.
+
+PORTFOLIO VALUE:
+
+AnalyticaAI demonstrates:
+
+* Full Stack Development
+* AI Engineering
+* Agentic AI
+* Data Analytics
+* Product Design
+* Backend Architecture
+* API Design
+* Database Design
+* SaaS Development
+
+SHORT DESCRIPTION:
+
+AnalyticaAI is an AI-powered data analytics platform that transforms uploaded datasets into dashboards, insights, visualizations, and reports through natural language interaction, enabling users to perform advanced analytics without coding.
