@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, Loader2, RefreshCw, BarChart2, Sparkles, LayoutDashboard, FileText } from 'lucide-react'
+import { ArrowLeft, Loader2, RefreshCw, BarChart2, Sparkles, LayoutDashboard, FileText, TrendingUp } from 'lucide-react'
 import toast from 'react-hot-toast'
 import datasetService, { Dataset } from '../../services/dataset.service'
 import profileService, { DatasetProfile } from '../../services/profile.service'
 import OverviewTab from '../../features/profiling/OverviewTab'
 import CleaningTab from '../../features/profiling/CleaningTab'
+import EDATab from '../../features/eda/EDATab'
+
+import type { LucideIcon } from 'lucide-react'
 
 // ── Tab definitions ───────────────────────────────────────────────────────
 
@@ -15,7 +18,7 @@ type TabId = 'overview' | 'cleaning' | 'eda' | 'dashboard' | 'reports'
 interface TabDef {
   id: TabId
   label: string
-  icon: React.FC<{ size?: number; className?: string }>
+  icon: LucideIcon
   phase: number
   available: boolean
 }
@@ -23,7 +26,7 @@ interface TabDef {
 const TABS: TabDef[] = [
   { id: 'overview',   label: 'Overview',   icon: BarChart2,       phase: 2, available: true  },
   { id: 'cleaning',   label: 'Cleaning',   icon: Sparkles,        phase: 2, available: true  },
-  { id: 'eda',        label: 'EDA',        icon: BarChart2,       phase: 3, available: false },
+  { id: 'eda',        label: 'EDA',        icon: TrendingUp,      phase: 3, available: true  },
   { id: 'dashboard',  label: 'Dashboard',  icon: LayoutDashboard, phase: 5, available: false },
   { id: 'reports',    label: 'Reports',    icon: FileText,        phase: 6, available: false },
 ]
@@ -261,8 +264,29 @@ export default function DatasetWorkspacePage() {
           </>
         )}
 
+        {/* EDA */}
+        {activeTab === 'eda' && (
+          <>
+            {!profile && (
+              <div className="border border-border bg-linen p-12 text-center">
+                <TrendingUp size={32} className="text-ink-faint mx-auto mb-3" />
+                <p className="font-bold text-sm uppercase tracking-wide text-ink mb-2">
+                  Profile First
+                </p>
+                <p className="text-xs text-ink-faint mb-6">
+                  Profile the dataset first, then run EDA to generate charts and statistics.
+                </p>
+                <button onClick={handleTriggerProfile} className="btn-primary text-xs py-2.5 px-6">
+                  Profile Dataset
+                </button>
+              </div>
+            )}
+            {profile && <EDATab datasetId={id!} />}
+          </>
+        )}
+
         {/* Future tabs */}
-        {(activeTab === 'eda' || activeTab === 'dashboard' || activeTab === 'reports') && (
+        {(activeTab === 'dashboard' || activeTab === 'reports') && (
           <div className="border border-border bg-linen p-16 text-center">
             <p className="label-blue mb-3">
               Phase {TABS.find(t => t.id === activeTab)?.phase}
