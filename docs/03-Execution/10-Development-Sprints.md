@@ -87,6 +87,7 @@ Create:
 
 ```text
 React.js
+Vite
 TypeScript
 Tailwind
 Shadcn UI

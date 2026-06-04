@@ -36,9 +36,8 @@ coverage.xml
 
 # Node / Frontend
 node_modules/
-.next/
-out/
 dist/
+out/
 build/
 .vercel/
 *.tsbuildinfo

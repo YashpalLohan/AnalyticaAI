@@ -71,8 +71,9 @@ Vector Database
 
 ### Framework
 
-* React.js 19
+* React.js 18
 * TypeScript
+* Vite
 
 ### Styling
 

@@ -124,6 +124,7 @@ Infrastructure Layer
 
 ```text
 React.js
+Vite
 TypeScript
 Tailwind CSS
 Shadcn UI

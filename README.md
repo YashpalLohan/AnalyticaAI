@@ -32,7 +32,7 @@ AnalyticaAI is a full-stack AI-powered analytics platform that lets users upload
 
 | Layer | Technology |
 |---|---|
-| Frontend | React.js 19, TypeScript, Tailwind CSS, Shadcn UI, Recharts |
+| Frontend | React.js 18, TypeScript, Tailwind CSS, Shadcn UI, Recharts |
 | Backend | FastAPI, Python 3.12, SQLAlchemy, Celery |
 | Database | PostgreSQL |
 | Vector DB | ChromaDB |
@@ -70,9 +70,9 @@ AnalyticaAI/
 │   ├── requirements.txt
 │   └── Dockerfile
 │
-├── frontend/                  # Next.js application
+├── frontend/                  # React.js application (Vite + React Router)
 │   ├── src/
-│   │   ├── app/               # Next.js app router pages
+│   │   ├── app/               # Route components (pages)
 │   │   ├── components/        # Shared UI components
 │   │   ├── features/          # Feature modules (auth, datasets, chat...)
 │   │   ├── services/          # API service functions

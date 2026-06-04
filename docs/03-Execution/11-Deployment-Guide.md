@@ -169,8 +169,8 @@ project/
 ### .env.local
 
 ```env id="35jzwd"
-REACT_PUBLIC_API_URL=
-REACT_PUBLIC_APP_URL=
+VITE_API_URL=
+VITE_APP_URL=
 ```
 
 ---
@@ -475,7 +475,7 @@ Import project.
 ### Configure Environment Variables
 
 ```env id="0h6cxh"
-REACT_PUBLIC_API_URL
+VITE_API_URL
 ```
 
 ---

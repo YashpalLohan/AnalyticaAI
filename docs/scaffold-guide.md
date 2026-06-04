@@ -31,7 +31,7 @@ project-scaffold/
 │
 ├── frontend/
 │   ├── src/
-│   │   ├── app/                 ← Next.js app router pages
+│   │   ├── app/                 ← Route components (pages)
 │   │   ├── components/          ← Shared UI components
 │   │   ├── features/            ← Feature modules (auth, datasets, chat...)
 │   │   ├── services/            ← API service functions

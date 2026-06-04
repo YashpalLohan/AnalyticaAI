@@ -89,6 +89,7 @@ Establish project architecture.
 ### Frontend Setup
 
 * React.js
+* Vite
 * TypeScript
 * Tailwind
 * Shadcn UI
