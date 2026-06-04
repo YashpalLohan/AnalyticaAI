@@ -54,6 +54,10 @@ yarn-error.log*
 storage/
 /chroma_db/
 
+# Large / generated sample datasets (not tracked)
+sample-datasets/ecommerce_*.csv
+sample-datasets/*_large.csv
+
 # ML Models
 *.pkl
 *.joblib

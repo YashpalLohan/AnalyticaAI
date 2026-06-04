@@ -46,5 +46,8 @@ async def get_db():
 async def init_db():
     """Create all tables on startup (dev only). Use Alembic in production."""
     async with engine.begin() as conn:
-        from app.models import user  # noqa: F401 — import so Base knows about it
+        from app.models import user        # noqa: F401
+        from app.models import dataset     # noqa: F401
+        from app.models import dataset_profile  # noqa: F401
+        from app.models import dataset_column   # noqa: F401
         await conn.run_sync(Base.metadata.create_all)

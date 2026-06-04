@@ -24,6 +24,10 @@ class StorageBackend(ABC):
         """Upload file and return public/signed URL."""
 
     @abstractmethod
+    async def download(self, path: str) -> bytes:
+        """Download file bytes from storage."""
+
+    @abstractmethod
     async def delete(self, path: str) -> None:
         """Delete file at path."""
 
@@ -53,6 +57,16 @@ class LocalStorage(StorageBackend):
         full_path.write_bytes(data)
         # Returns a relative path — the API serves files from /static/
         return f"/static/{path}"
+
+    async def download(self, path: str) -> bytes:
+        full_path = self.base / path
+        if not full_path.exists():
+            from fastapi import HTTPException, status
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail={"code": "FILE_NOT_FOUND", "message": f"File not found: {path}"},
+            )
+        return full_path.read_bytes()
 
     async def delete(self, path: str) -> None:
         full_path = self.base / path
@@ -96,6 +110,10 @@ class SupabaseStorage(StorageBackend):
         )
         result = self.client.storage.from_(self.bucket).get_public_url(path)
         return result
+
+    async def download(self, path: str) -> bytes:
+        response = self.client.storage.from_(self.bucket).download(path)
+        return response
 
     async def delete(self, path: str) -> None:
         self.client.storage.from_(self.bucket).remove([path])

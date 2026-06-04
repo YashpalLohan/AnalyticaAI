@@ -10,6 +10,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 
 import DashboardPage from './app/dashboard/DashboardPage'
 import DatasetsPage from './app/datasets/DatasetsPage'
+import DatasetWorkspacePage from './app/datasets/DatasetWorkspacePage'
 
 export default function App() {
   return (
@@ -43,8 +44,8 @@ export default function App() {
         >
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/datasets" element={<DatasetsPage />} />
-          {/* Placeholder routes — built in later phases */}
-          <Route path="/datasets/:id" element={<DatasetsPage />} />
+          {/* Phase 2: Dataset Workspace with profiling tabs */}
+          <Route path="/datasets/:id" element={<DatasetWorkspacePage />} />
           <Route path="/chat" element={<ComingSoon label="AI Chat" phase={4} />} />
           <Route path="/analytics" element={<ComingSoon label="Analytics" phase={3} />} />
           <Route path="/reports" element={<ComingSoon label="Reports" phase={6} />} />

@@ -14,11 +14,11 @@ api_router.include_router(users.router,    prefix="/users",    tags=["Users"])
 # ── Phase 1 ──
 api_router.include_router(datasets.router, prefix="/datasets", tags=["Datasets"])
 
+# ── Phase 2 ──
+from app.api.v1.endpoints import profile
+api_router.include_router(profile.router, prefix="/datasets", tags=["Profiling"])
+
 # Uncomment as each phase is completed:
-# from app.api.v1.endpoints import profile
-# api_router.include_router(profile.router, prefix="/datasets", tags=["Profiling"])
-# from app.api.v1.endpoints import cleaning
-# api_router.include_router(cleaning.router, prefix="/datasets", tags=["Cleaning"])
 # from app.api.v1.endpoints import eda
 # api_router.include_router(eda.router, prefix="/datasets", tags=["EDA"])
 # from app.api.v1.endpoints import dashboards
