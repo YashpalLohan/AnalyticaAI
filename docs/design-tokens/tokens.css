@@ -1,75 +1,76 @@
 /* =============================================================
-   AnalyticaAI — Design Tokens
-   Inspired by: editorial / industrial AI aesthetic
-   Background grid, bold typography, red accent on off-white
+   AnalyticaAI — Design Tokens v2
+   Palette: Warm linen bg + Deep navy panels + Electric blue accent
+   Style: Editorial, bold, sharp corners, grid background
    ============================================================= */
 
 :root {
 
   /* -----------------------------------------------------------
-     Colors
+     Backgrounds
   ----------------------------------------------------------- */
+  --color-bg-primary:        #F0EEE9;   /* Warm linen — main page */
+  --color-bg-secondary:      #E8E5DE;   /* Slightly darker linen */
+  --color-bg-tertiary:       #DEDAD2;   /* Deeper linen — hover states */
+  --color-bg-dark:           #1A1F2E;   /* Deep navy-charcoal — dark sections */
+  --color-bg-dark-secondary: #222839;   /* Lighter dark — cards on dark */
+  --color-bg-dark-tertiary:  #2C3347;   /* Hover on dark */
 
-  /* Backgrounds */
-  --color-bg-primary:        #F4F1EB;   /* Off-white / cream — main page bg */
-  --color-bg-secondary:      #EDEAE3;   /* Slightly darker cream — cards, panels */
-  --color-bg-dark:           #0A0A0A;   /* Near-black — dark sections, dark cards */
-  --color-bg-dark-secondary: #141414;   /* Slightly lighter dark */
+  /* -----------------------------------------------------------
+     Text
+  ----------------------------------------------------------- */
+  --color-text-primary:      #16191F;   /* Near-black with blue undertone */
+  --color-text-secondary:    #363A45;   /* Dark grey-blue */
+  --color-text-muted:        #6B7080;   /* Muted blue-grey */
+  --color-text-inverse:      #F0EEE9;   /* On dark backgrounds */
+  --color-text-inverse-muted:#8A90A0;   /* Muted on dark */
 
-  /* Text */
-  --color-text-primary:      #0A0A0A;   /* Near-black — headings, body */
-  --color-text-secondary:    #3A3A3A;   /* Dark grey — subheadings */
-  --color-text-muted:        #7A7A7A;   /* Muted — captions, meta */
-  --color-text-inverse:      #F4F1EB;   /* On dark backgrounds */
-  --color-text-inverse-muted:#A0A0A0;
+  /* -----------------------------------------------------------
+     Accent — Electric Blue
+  ----------------------------------------------------------- */
+  --color-accent:            #4F6EF7;   /* Electric blue — primary CTA */
+  --color-accent-hover:      #3A57E8;   /* Deeper blue on hover */
+  --color-accent-light:      #EAEEff;   /* Very light blue tint */
+  --color-accent-dark:       #6B86FF;   /* Lighter blue on dark bg */
 
-  /* Accent — Red */
-  --color-accent:            #E8230A;   /* Primary red — CTAs, highlights */
-  --color-accent-hover:      #C41E08;   /* Darker red on hover */
-  --color-accent-light:      #FFE8E5;   /* Very light red tint */
+  /* -----------------------------------------------------------
+     Borders / Grid
+  ----------------------------------------------------------- */
+  --color-border:            #DEDAD2;   /* Subtle warm border */
+  --color-border-strong:     #C8C4BC;   /* Stronger border */
+  --color-border-dark:       #2E3448;   /* Border on dark backgrounds */
+  --color-grid-line:         #DDDAD3;   /* Background grid lines */
+  --color-grid-line-dark:    #232840;   /* Grid lines on dark bg */
 
-  /* Borders / Grid */
-  --color-border:            #D8D4CC;   /* Subtle border on cream */
-  --color-border-dark:       #2A2A2A;   /* Border on dark backgrounds */
-  --color-grid-line:         #D0CCC4;   /* Background grid pattern lines */
+  /* -----------------------------------------------------------
+     Semantic
+  ----------------------------------------------------------- */
+  --color-success:           #1E8A52;
+  --color-success-light:     #E8F7EF;
+  --color-warning:           #C47A00;
+  --color-warning-light:     #FFF5E6;
+  --color-error:             #D94040;
+  --color-error-light:       #FDEAEA;
+  --color-info:              #4F6EF7;
+  --color-info-light:        #EAEEff;
 
-  /* Semantic */
-  --color-success:           #1A7A4A;
-  --color-success-light:     #E6F4ED;
-  --color-warning:           #B85A00;
-  --color-warning-light:     #FFF3E6;
-  --color-error:             #E8230A;
-  --color-error-light:       #FFE8E5;
-  --color-info:              #0A4A8A;
-  --color-info-light:        #E6EFF8;
-
-  /* Chart palette */
-  --color-chart-1:           #E8230A;
-  --color-chart-2:           #0A0A0A;
-  --color-chart-3:           #3A7A5A;
-  --color-chart-4:           #8A5A00;
-  --color-chart-5:           #0A4A8A;
-  --color-chart-6:           #6A2A8A;
-  --color-chart-7:           #2A6A8A;
-  --color-chart-8:           #5A7A2A;
+  /* -----------------------------------------------------------
+     Chart palette — blues, warm neutrals, teal
+  ----------------------------------------------------------- */
+  --color-chart-1:           #4F6EF7;   /* Electric blue */
+  --color-chart-2:           #16191F;   /* Near-black */
+  --color-chart-3:           #1E8A7A;   /* Teal */
+  --color-chart-4:           #C47A00;   /* Amber */
+  --color-chart-5:           #8B5CF6;   /* Purple */
+  --color-chart-6:           #0EA5B0;   /* Cyan */
+  --color-chart-7:           #D94040;   /* Error red */
+  --color-chart-8:           #6B7F3A;   /* Olive */
 
   /* -----------------------------------------------------------
      Typography
   ----------------------------------------------------------- */
-
   --font-family-primary:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-family-mono:       'JetBrains Mono', 'Fira Code', monospace;
-
-  --font-size-xs:           11px;
-  --font-size-sm:           13px;
-  --font-size-base:         15px;
-  --font-size-lg:           17px;
-  --font-size-xl:           20px;
-  --font-size-2xl:          26px;
-  --font-size-3xl:          34px;
-  --font-size-4xl:          46px;
-  --font-size-5xl:          64px;
-  --font-size-6xl:          84px;
 
   --font-weight-regular:    400;
   --font-weight-medium:     500;
@@ -78,37 +79,12 @@
   --font-weight-black:      900;
 
   --letter-spacing-tight:   -0.03em;
-  --letter-spacing-normal:  0em;
   --letter-spacing-wide:    0.08em;
   --letter-spacing-wider:   0.12em;
 
-  --line-height-tight:      1.0;
-  --line-height-snug:       1.2;
-  --line-height-normal:     1.5;
-  --line-height-relaxed:    1.7;
-
   /* -----------------------------------------------------------
-     Spacing
+     Border Radius — Sharp / minimal
   ----------------------------------------------------------- */
-
-  --spacing-1:   4px;
-  --spacing-2:   8px;
-  --spacing-3:   12px;
-  --spacing-4:   16px;
-  --spacing-5:   20px;
-  --spacing-6:   24px;
-  --spacing-8:   32px;
-  --spacing-10:  40px;
-  --spacing-12:  48px;
-  --spacing-16:  64px;
-  --spacing-20:  80px;
-  --spacing-24:  96px;
-  --spacing-32:  128px;
-
-  /* -----------------------------------------------------------
-     Border Radius — Minimal/Sharp
-  ----------------------------------------------------------- */
-
   --radius-none:  0px;
   --radius-sm:    2px;
   --radius-md:    4px;
@@ -116,39 +92,18 @@
   --radius-full:  9999px;
 
   /* -----------------------------------------------------------
-     Shadows — Flat / editorial style
+     Shadows — Flat offset style
   ----------------------------------------------------------- */
-
-  --shadow-sm:    2px 2px 0px rgba(0,0,0,0.08);
-  --shadow-md:    4px 4px 0px rgba(0,0,0,0.10);
-  --shadow-lg:    6px 6px 0px rgba(0,0,0,0.12);
-  --shadow-dark:  4px 4px 0px rgba(0,0,0,0.5);
+  --shadow-flat-sm:   2px 2px 0px rgba(22,25,31,0.07);
+  --shadow-flat-md:   4px 4px 0px rgba(22,25,31,0.09);
+  --shadow-flat-lg:   6px 6px 0px rgba(22,25,31,0.11);
+  --shadow-flat-dark: 4px 4px 0px rgba(0,0,0,0.45);
+  --shadow-flat-blue: 4px 4px 0px rgba(79,110,247,0.28);
 
   /* -----------------------------------------------------------
      Layout
   ----------------------------------------------------------- */
-
-  --max-width-content:  1200px;
-  --max-width-page:     1440px;
-  --sidebar-width:      220px;
-  --navbar-height:      60px;
-
-  /* -----------------------------------------------------------
-     Z-Index
-  ----------------------------------------------------------- */
-
-  --z-base:      0;
-  --z-dropdown:  100;
-  --z-sticky:    200;
-  --z-overlay:   300;
-  --z-modal:     400;
-  --z-toast:     500;
-
-  /* -----------------------------------------------------------
-     Transitions
-  ----------------------------------------------------------- */
-
-  --transition-fast:    100ms ease;
-  --transition-normal:  200ms ease;
-  --transition-slow:    350ms ease;
+  --max-width-content: 1200px;
+  --navbar-height:     60px;
+  --sidebar-width:     220px;
 }

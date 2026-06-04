@@ -299,5 +299,5 @@ Return:
 
 | Version | Date | Change |
 |---|---|---|
-| 1.0 | 2024-01 | Initial prompts created |
-| 1.1 | 2024-01 | Switched from OpenAI to Groq (llama-3.3-70b-versatile) |
+| 1.0 | 2026-01 | Initial prompts created |
+| 1.1 | 2026-01 | Switched from OpenAI to Groq (llama-3.3-70b-versatile) |

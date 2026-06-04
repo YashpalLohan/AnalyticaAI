@@ -4,71 +4,62 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    background-color: #F4F1EB;
-  }
-  body {
-    @apply bg-cream text-ink font-sans antialiased;
-  }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-black tracking-tight text-ink;
-  }
+  html { background-color: #F0EEE9; }
+  body { @apply bg-linen text-ink font-sans antialiased; }
+  h1, h2, h3, h4, h5, h6 { @apply font-black tracking-tight text-ink; }
 }
 
 @layer utilities {
-  /* Grid background — matches reference design */
+  /* Grid backgrounds */
   .bg-grid {
-    background-color: #F4F1EB;
+    background-color: #F0EEE9;
     background-image:
-      linear-gradient(to right, #D0CCC4 1px, transparent 1px),
-      linear-gradient(to bottom, #D0CCC4 1px, transparent 1px);
+      linear-gradient(to right, #DDDAD3 1px, transparent 1px),
+      linear-gradient(to bottom, #DDDAD3 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .bg-grid-navy {
+    background-color: #1A1F2E;
+    background-image:
+      linear-gradient(to right, #232840 1px, transparent 1px),
+      linear-gradient(to bottom, #232840 1px, transparent 1px);
     background-size: 40px 40px;
   }
 
-  /* Uppercase label — small tracking */
-  .label {
-    @apply text-xs font-semibold uppercase tracking-widest text-ink-faint;
-  }
+  /* Labels */
+  .label      { @apply text-xs font-semibold uppercase tracking-widest text-ink-faint; }
+  .label-blue { @apply text-xs font-semibold uppercase tracking-widest text-blue; }
 
-  /* Red accent label */
-  .label-red {
-    @apply text-xs font-semibold uppercase tracking-widest text-red;
-  }
-
-  /* Sharp button — no border radius */
+  /* Buttons — sharp, no radius */
   .btn-primary {
-    @apply bg-red text-cream font-bold uppercase tracking-wider text-sm
+    @apply bg-blue text-white font-bold uppercase tracking-wider text-sm
            px-6 py-3 inline-block transition-all duration-100
-           hover:bg-red-hover hover:shadow-flat-red;
+           hover:bg-blue-hover hover:shadow-flat-blue;
   }
-
   .btn-secondary {
     @apply bg-transparent text-ink font-bold uppercase tracking-wider text-sm
            px-6 py-3 inline-block border border-ink
            transition-all duration-100
-           hover:bg-ink hover:text-cream;
+           hover:bg-ink hover:text-linen;
   }
-
   .btn-ghost {
-    @apply bg-transparent text-ink-muted font-medium text-sm
-           px-4 py-2 inline-block
-           transition-colors duration-100
-           hover:text-ink;
+    @apply bg-transparent text-ink-faint font-medium text-sm px-4 py-2
+           inline-block transition-colors duration-100 hover:text-ink;
+  }
+  .btn-outline-light {
+    @apply bg-transparent text-linen font-bold uppercase tracking-wider text-sm
+           px-6 py-3 inline-block border border-border-dark
+           transition-all duration-100
+           hover:bg-linen hover:text-ink;
   }
 
-  /* Card on cream background */
-  .card {
-    @apply bg-cream-dark border border-border p-6;
-  }
+  /* Cards */
+  .card       { @apply bg-linen-dark border border-border p-6; }
+  .card-navy  { @apply bg-navy text-linen border border-border-dark p-6; }
 
-  /* Dark card */
-  .card-dark {
-    @apply bg-ink text-cream border border-border-dark p-6;
-  }
-
-  /* Input field */
+  /* Input */
   .input {
-    @apply w-full bg-cream border border-border text-ink text-sm
+    @apply w-full bg-linen border border-border text-ink text-sm
            px-3 py-2.5 outline-none
            focus:border-ink transition-colors duration-100
            placeholder:text-ink-faint;

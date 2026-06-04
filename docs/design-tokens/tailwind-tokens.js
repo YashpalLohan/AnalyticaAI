@@ -1,44 +1,39 @@
 /**
- * AnalyticaAI — Tailwind CSS Token Extension
- * Editorial / industrial AI aesthetic
- * Off-white grid background + red accent + heavy black typography
- *
- * Usage in tailwind.config.ts:
- *   import tokens from '../docs/design-tokens/tailwind-tokens'
- *   export default { theme: { extend: { ...tokens } } }
+ * AnalyticaAI — Tailwind Tokens v2
+ * Palette: Warm linen + Deep navy + Electric blue accent
  */
 
 const tokens = {
   colors: {
-    // Backgrounds
-    cream: {
-      DEFAULT: '#F4F1EB',
-      dark:    '#EDEAE3',
-      darker:  '#E4E0D8',
+    linen: {
+      DEFAULT: '#F0EEE9',
+      dark:    '#E8E5DE',
+      darker:  '#DEDAD2',
+    },
+    navy: {
+      DEFAULT: '#1A1F2E',
+      soft:    '#222839',
+      light:   '#2C3347',
     },
     ink: {
-      DEFAULT: '#0A0A0A',
-      soft:    '#141414',
-      muted:   '#3A3A3A',
-      faint:   '#7A7A7A',
+      DEFAULT: '#16191F',
+      muted:   '#363A45',
+      faint:   '#6B7080',
     },
-    // Accent
-    red: {
-      DEFAULT: '#E8230A',
-      hover:   '#C41E08',
-      light:   '#FFE8E5',
+    blue: {
+      DEFAULT: '#4F6EF7',
+      hover:   '#3A57E8',
+      light:   '#EAEEff',
+      dark:    '#6B86FF',
     },
-    // Borders
     border: {
-      DEFAULT: '#D8D4CC',
-      dark:    '#2A2A2A',
-      grid:    '#D0CCC4',
+      DEFAULT: '#DEDAD2',
+      strong:  '#C8C4BC',
+      dark:    '#2E3448',
     },
-    // Semantic
-    success: { DEFAULT: '#1A7A4A', light: '#E6F4ED' },
-    warning: { DEFAULT: '#B85A00', light: '#FFF3E6' },
-    error:   { DEFAULT: '#E8230A', light: '#FFE8E5' },
-    info:    { DEFAULT: '#0A4A8A', light: '#E6EFF8' },
+    success: { DEFAULT: '#1E8A52', light: '#E8F7EF' },
+    warning: { DEFAULT: '#C47A00', light: '#FFF5E6' },
+    error:   { DEFAULT: '#D94040', light: '#FDEAEA' },
   },
 
   fontFamily: {
@@ -46,53 +41,21 @@ const tokens = {
     mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
   },
 
-  fontSize: {
-    'xs':   ['11px', { lineHeight: '1.5' }],
-    'sm':   ['13px', { lineHeight: '1.5' }],
-    'base': ['15px', { lineHeight: '1.6' }],
-    'lg':   ['17px', { lineHeight: '1.5' }],
-    'xl':   ['20px', { lineHeight: '1.4' }],
-    '2xl':  ['26px', { lineHeight: '1.2' }],
-    '3xl':  ['34px', { lineHeight: '1.1' }],
-    '4xl':  ['46px', { lineHeight: '1.0' }],
-    '5xl':  ['64px', { lineHeight: '1.0', letterSpacing: '-0.02em' }],
-    '6xl':  ['84px', { lineHeight: '0.95', letterSpacing: '-0.03em' }],
-  },
-
-  letterSpacing: {
-    tighter: '-0.03em',
-    tight:   '-0.01em',
-    normal:  '0em',
-    wide:    '0.06em',
-    wider:   '0.10em',
-    widest:  '0.14em',
-  },
-
   borderRadius: {
-    'none': '0px',
-    'sm':   '2px',
+    none:    '0px',
+    sm:      '2px',
     DEFAULT: '4px',
-    'md':   '4px',
-    'lg':   '6px',
-    'full': '9999px',
+    md:      '4px',
+    lg:      '6px',
+    full:    '9999px',
   },
 
   boxShadow: {
-    'flat-sm':  '2px 2px 0px rgba(0,0,0,0.08)',
-    'flat-md':  '4px 4px 0px rgba(0,0,0,0.10)',
-    'flat-lg':  '6px 6px 0px rgba(0,0,0,0.12)',
-    'flat-dark':'4px 4px 0px rgba(0,0,0,0.5)',
-    'flat-red': '4px 4px 0px rgba(232,35,10,0.3)',
-  },
-
-  spacing: {
-    sidebar:  '220px',
-    navbar:   '60px',
-  },
-
-  maxWidth: {
-    content: '1200px',
-    page:    '1440px',
+    'flat-sm':   '2px 2px 0px rgba(22,25,31,0.07)',
+    'flat-md':   '4px 4px 0px rgba(22,25,31,0.09)',
+    'flat-lg':   '6px 6px 0px rgba(22,25,31,0.11)',
+    'flat-dark': '4px 4px 0px rgba(0,0,0,0.45)',
+    'flat-blue': '4px 4px 0px rgba(79,110,247,0.28)',
   },
 }
 
