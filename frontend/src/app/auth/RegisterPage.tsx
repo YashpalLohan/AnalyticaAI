@@ -12,7 +12,7 @@ export default function RegisterPage() {
     e.preventDefault()
     setError('')
     if (form.password.length < 8) {
-      setError('Password must be at least 8 characters')
+      setError('Password must be at least 8 characters.')
       return
     }
     setLoading(true)
@@ -27,72 +27,107 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <Link to="/" className="text-2xl font-bold text-blue-600">AnalyticaAI</Link>
-          <p className="text-slate-500 mt-2">Create your free account</p>
-        </div>
+    <div className="min-h-screen bg-grid flex">
 
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-8">
-          <h1 className="text-xl font-semibold text-slate-900 mb-6">Get started for free</h1>
+      {/* ── Left panel — branding ── */}
+      <div className="hidden lg:flex flex-col justify-between w-1/2 bg-ink p-12 border-r border-border-dark">
+        <Link to="/" className="text-base font-black uppercase tracking-wider text-cream">
+          AnalyticaAI<span className="text-red">.</span>
+        </Link>
+        <div>
+          <p className="label text-red mb-4">Create account</p>
+          <h1 className="text-4xl font-black uppercase tracking-tight text-cream leading-tight mb-6">
+            Initialize<br />
+            your node.
+          </h1>
+          <p className="text-sm text-cream/50 leading-relaxed max-w-xs">
+            Upload a dataset and get AI-powered insights in under 60 seconds.
+            No SQL. No code. No setup.
+          </p>
+        </div>
+        <div className="space-y-2">
+          {['Dataset profiling', 'AI Chat interface', 'Auto dashboards', 'PDF report export'].map(f => (
+            <div key={f} className="flex items-center gap-2">
+              <div className="w-1.5 h-1.5 bg-red" />
+              <p className="text-xs text-cream/50">{f}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Right panel — form ── */}
+      <div className="flex-1 flex items-center justify-center px-6 py-12">
+        <div className="w-full max-w-sm">
+
+          {/* Mobile logo */}
+          <Link to="/" className="lg:hidden block text-base font-black uppercase tracking-wider text-ink mb-10">
+            AnalyticaAI<span className="text-red">.</span>
+          </Link>
+
+          <p className="label-red mb-2">Registration</p>
+          <h2 className="text-2xl font-black uppercase tracking-tight text-ink mb-8">Create account</h2>
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 text-sm rounded-lg px-4 py-3 mb-4">
+            <div className="bg-red-light border border-red text-red text-sm px-4 py-3 mb-6">
               {error}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Full name</label>
+              <label className="label block mb-1.5">Full name</label>
               <input
                 type="text"
                 required
                 value={form.full_name}
-                onChange={(e) => setForm({ ...form, full_name: e.target.value })}
-                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={e => setForm({ ...form, full_name: e.target.value })}
+                className="input"
                 placeholder="Jane Doe"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+              <label className="label block mb-1.5">Email</label>
               <input
                 type="email"
                 required
                 value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={e => setForm({ ...form, email: e.target.value })}
+                className="input"
                 placeholder="you@example.com"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+              <label className="label block mb-1.5">Password</label>
               <input
                 type="password"
                 required
                 value={form.password}
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={e => setForm({ ...form, password: e.target.value })}
+                className="input"
                 placeholder="Min. 8 characters"
               />
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-            >
-              {loading ? 'Creating account...' : 'Create account'}
-            </button>
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn-primary w-full text-center disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? 'Creating account...' : 'Initialize account →'}
+              </button>
+            </div>
           </form>
 
-          <p className="text-center text-sm text-slate-500 mt-6">
+          <p className="text-sm text-ink-faint mt-8">
             Already have an account?{' '}
-            <Link to="/login" className="text-blue-600 font-medium hover:underline">Sign in</Link>
+            <Link to="/login" className="text-ink font-semibold underline underline-offset-2 hover:text-red transition-colors">
+              Sign in →
+            </Link>
           </p>
         </div>
       </div>
+
     </div>
   )
 }

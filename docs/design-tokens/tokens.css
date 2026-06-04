@@ -1,177 +1,154 @@
 /* =============================================================
    AnalyticaAI — Design Tokens
-   Source of truth for all UI styling decisions.
-   Import this in your global CSS or Tailwind config.
+   Inspired by: editorial / industrial AI aesthetic
+   Background grid, bold typography, red accent on off-white
    ============================================================= */
 
 :root {
 
   /* -----------------------------------------------------------
-     Colors — Light Mode
+     Colors
   ----------------------------------------------------------- */
 
   /* Backgrounds */
-  --color-bg-primary:        #FFFFFF;
-  --color-bg-secondary:      #F8FAFC;
-  --color-bg-tertiary:       #F1F5F9;
-  --color-bg-overlay:        rgba(0, 0, 0, 0.5);
-
-  /* Borders */
-  --color-border-default:    #E2E8F0;
-  --color-border-strong:     #CBD5E1;
-  --color-border-focus:      #2563EB;
+  --color-bg-primary:        #F4F1EB;   /* Off-white / cream — main page bg */
+  --color-bg-secondary:      #EDEAE3;   /* Slightly darker cream — cards, panels */
+  --color-bg-dark:           #0A0A0A;   /* Near-black — dark sections, dark cards */
+  --color-bg-dark-secondary: #141414;   /* Slightly lighter dark */
 
   /* Text */
-  --color-text-primary:      #0F172A;
-  --color-text-secondary:    #64748B;
-  --color-text-tertiary:     #94A3B8;
-  --color-text-inverse:      #FFFFFF;
-  --color-text-disabled:     #CBD5E1;
+  --color-text-primary:      #0A0A0A;   /* Near-black — headings, body */
+  --color-text-secondary:    #3A3A3A;   /* Dark grey — subheadings */
+  --color-text-muted:        #7A7A7A;   /* Muted — captions, meta */
+  --color-text-inverse:      #F4F1EB;   /* On dark backgrounds */
+  --color-text-inverse-muted:#A0A0A0;
 
-  /* Brand / Accent */
-  --color-accent-primary:    #2563EB;
-  --color-accent-hover:      #1D4ED8;
-  --color-accent-light:      #EFF6FF;
-  --color-accent-subtle:     #DBEAFE;
+  /* Accent — Red */
+  --color-accent:            #E8230A;   /* Primary red — CTAs, highlights */
+  --color-accent-hover:      #C41E08;   /* Darker red on hover */
+  --color-accent-light:      #FFE8E5;   /* Very light red tint */
+
+  /* Borders / Grid */
+  --color-border:            #D8D4CC;   /* Subtle border on cream */
+  --color-border-dark:       #2A2A2A;   /* Border on dark backgrounds */
+  --color-grid-line:         #D0CCC4;   /* Background grid pattern lines */
 
   /* Semantic */
-  --color-success:           #16A34A;
-  --color-success-light:     #F0FDF4;
-  --color-warning:           #EA580C;
-  --color-warning-light:     #FFF7ED;
-  --color-error:             #DC2626;
-  --color-error-light:       #FEF2F2;
-  --color-info:              #0284C7;
-  --color-info-light:        #F0F9FF;
+  --color-success:           #1A7A4A;
+  --color-success-light:     #E6F4ED;
+  --color-warning:           #B85A00;
+  --color-warning-light:     #FFF3E6;
+  --color-error:             #E8230A;
+  --color-error-light:       #FFE8E5;
+  --color-info:              #0A4A8A;
+  --color-info-light:        #E6EFF8;
 
-  /* Charts / Data Visualization */
-  --color-chart-1:           #2563EB;
-  --color-chart-2:           #7C3AED;
-  --color-chart-3:           #059669;
-  --color-chart-4:           #D97706;
-  --color-chart-5:           #DC2626;
-  --color-chart-6:           #0284C7;
-  --color-chart-7:           #DB2777;
-  --color-chart-8:           #65A30D;
+  /* Chart palette */
+  --color-chart-1:           #E8230A;
+  --color-chart-2:           #0A0A0A;
+  --color-chart-3:           #3A7A5A;
+  --color-chart-4:           #8A5A00;
+  --color-chart-5:           #0A4A8A;
+  --color-chart-6:           #6A2A8A;
+  --color-chart-7:           #2A6A8A;
+  --color-chart-8:           #5A7A2A;
 
   /* -----------------------------------------------------------
      Typography
   ----------------------------------------------------------- */
 
-  --font-family-primary:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-family-mono:        'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  --font-family-primary:    'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-mono:       'JetBrains Mono', 'Fira Code', monospace;
 
-  /* Font Sizes */
-  --font-size-xs:            12px;
-  --font-size-sm:            14px;
-  --font-size-base:          16px;
-  --font-size-lg:            18px;
-  --font-size-xl:            20px;
-  --font-size-2xl:           24px;
-  --font-size-3xl:           30px;
-  --font-size-4xl:           36px;
-  --font-size-5xl:           48px;
+  --font-size-xs:           11px;
+  --font-size-sm:           13px;
+  --font-size-base:         15px;
+  --font-size-lg:           17px;
+  --font-size-xl:           20px;
+  --font-size-2xl:          26px;
+  --font-size-3xl:          34px;
+  --font-size-4xl:          46px;
+  --font-size-5xl:          64px;
+  --font-size-6xl:          84px;
 
-  /* Font Weights */
-  --font-weight-regular:     400;
-  --font-weight-medium:      500;
-  --font-weight-semibold:    600;
-  --font-weight-bold:        700;
+  --font-weight-regular:    400;
+  --font-weight-medium:     500;
+  --font-weight-semibold:   600;
+  --font-weight-bold:       700;
+  --font-weight-black:      900;
 
-  /* Line Heights */
-  --line-height-tight:       1.2;
-  --line-height-normal:      1.5;
-  --line-height-relaxed:     1.75;
+  --letter-spacing-tight:   -0.03em;
+  --letter-spacing-normal:  0em;
+  --letter-spacing-wide:    0.08em;
+  --letter-spacing-wider:   0.12em;
 
-  /* -----------------------------------------------------------
-     Spacing Scale
-  ----------------------------------------------------------- */
-
-  --spacing-1:               4px;
-  --spacing-2:               8px;
-  --spacing-3:               12px;
-  --spacing-4:               16px;
-  --spacing-5:               20px;
-  --spacing-6:               24px;
-  --spacing-8:               32px;
-  --spacing-10:              40px;
-  --spacing-12:              48px;
-  --spacing-16:              64px;
-  --spacing-20:              80px;
-  --spacing-24:              96px;
+  --line-height-tight:      1.0;
+  --line-height-snug:       1.2;
+  --line-height-normal:     1.5;
+  --line-height-relaxed:    1.7;
 
   /* -----------------------------------------------------------
-     Border Radius
+     Spacing
   ----------------------------------------------------------- */
 
-  --radius-sm:               4px;
-  --radius-md:               8px;
-  --radius-lg:               12px;
-  --radius-xl:               16px;
-  --radius-2xl:              24px;
-  --radius-full:             9999px;
+  --spacing-1:   4px;
+  --spacing-2:   8px;
+  --spacing-3:   12px;
+  --spacing-4:   16px;
+  --spacing-5:   20px;
+  --spacing-6:   24px;
+  --spacing-8:   32px;
+  --spacing-10:  40px;
+  --spacing-12:  48px;
+  --spacing-16:  64px;
+  --spacing-20:  80px;
+  --spacing-24:  96px;
+  --spacing-32:  128px;
 
   /* -----------------------------------------------------------
-     Shadows
+     Border Radius — Minimal/Sharp
   ----------------------------------------------------------- */
 
-  --shadow-sm:               0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md:               0 4px 6px rgba(0, 0, 0, 0.07);
-  --shadow-lg:               0 10px 15px rgba(0, 0, 0, 0.10);
-  --shadow-xl:               0 20px 25px rgba(0, 0, 0, 0.12);
+  --radius-none:  0px;
+  --radius-sm:    2px;
+  --radius-md:    4px;
+  --radius-lg:    6px;
+  --radius-full:  9999px;
+
+  /* -----------------------------------------------------------
+     Shadows — Flat / editorial style
+  ----------------------------------------------------------- */
+
+  --shadow-sm:    2px 2px 0px rgba(0,0,0,0.08);
+  --shadow-md:    4px 4px 0px rgba(0,0,0,0.10);
+  --shadow-lg:    6px 6px 0px rgba(0,0,0,0.12);
+  --shadow-dark:  4px 4px 0px rgba(0,0,0,0.5);
 
   /* -----------------------------------------------------------
      Layout
   ----------------------------------------------------------- */
 
-  --max-width-content:       1280px;
-  --max-width-page:          1440px;
-  --sidebar-width:           240px;
-  --navbar-height:           64px;
+  --max-width-content:  1200px;
+  --max-width-page:     1440px;
+  --sidebar-width:      220px;
+  --navbar-height:      60px;
 
   /* -----------------------------------------------------------
-     Z-Index Scale
+     Z-Index
   ----------------------------------------------------------- */
 
-  --z-base:                  0;
-  --z-dropdown:              100;
-  --z-sticky:                200;
-  --z-overlay:               300;
-  --z-modal:                 400;
-  --z-toast:                 500;
-  --z-tooltip:               600;
+  --z-base:      0;
+  --z-dropdown:  100;
+  --z-sticky:    200;
+  --z-overlay:   300;
+  --z-modal:     400;
+  --z-toast:     500;
 
   /* -----------------------------------------------------------
      Transitions
   ----------------------------------------------------------- */
 
-  --transition-fast:         150ms ease;
-  --transition-normal:       250ms ease;
-  --transition-slow:         400ms ease;
-}
-
-/* =============================================================
-   Dark Mode Tokens
-   ============================================================= */
-
-[data-theme="dark"] {
-
-  --color-bg-primary:        #0F172A;
-  --color-bg-secondary:      #1E293B;
-  --color-bg-tertiary:       #334155;
-
-  --color-border-default:    #334155;
-  --color-border-strong:     #475569;
-
-  --color-text-primary:      #F8FAFC;
-  --color-text-secondary:    #94A3B8;
-  --color-text-tertiary:     #64748B;
-
-  --color-accent-light:      #1E3A5F;
-  --color-accent-subtle:     #1E3A5F;
-
-  --color-success-light:     #052E16;
-  --color-warning-light:     #431407;
-  --color-error-light:       #450A0A;
-  --color-info-light:        #082F49;
+  --transition-fast:    100ms ease;
+  --transition-normal:  200ms ease;
+  --transition-slow:    350ms ease;
 }

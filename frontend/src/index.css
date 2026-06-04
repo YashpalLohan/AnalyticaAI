@@ -1,13 +1,76 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  * {
-    @apply border-border;
+  html {
+    background-color: #F4F1EB;
   }
   body {
-    @apply bg-white text-slate-900 font-sans antialiased;
+    @apply bg-cream text-ink font-sans antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-black tracking-tight text-ink;
+  }
+}
+
+@layer utilities {
+  /* Grid background — matches reference design */
+  .bg-grid {
+    background-color: #F4F1EB;
+    background-image:
+      linear-gradient(to right, #D0CCC4 1px, transparent 1px),
+      linear-gradient(to bottom, #D0CCC4 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Uppercase label — small tracking */
+  .label {
+    @apply text-xs font-semibold uppercase tracking-widest text-ink-faint;
+  }
+
+  /* Red accent label */
+  .label-red {
+    @apply text-xs font-semibold uppercase tracking-widest text-red;
+  }
+
+  /* Sharp button — no border radius */
+  .btn-primary {
+    @apply bg-red text-cream font-bold uppercase tracking-wider text-sm
+           px-6 py-3 inline-block transition-all duration-100
+           hover:bg-red-hover hover:shadow-flat-red;
+  }
+
+  .btn-secondary {
+    @apply bg-transparent text-ink font-bold uppercase tracking-wider text-sm
+           px-6 py-3 inline-block border border-ink
+           transition-all duration-100
+           hover:bg-ink hover:text-cream;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-ink-muted font-medium text-sm
+           px-4 py-2 inline-block
+           transition-colors duration-100
+           hover:text-ink;
+  }
+
+  /* Card on cream background */
+  .card {
+    @apply bg-cream-dark border border-border p-6;
+  }
+
+  /* Dark card */
+  .card-dark {
+    @apply bg-ink text-cream border border-border-dark p-6;
+  }
+
+  /* Input field */
+  .input {
+    @apply w-full bg-cream border border-border text-ink text-sm
+           px-3 py-2.5 outline-none
+           focus:border-ink transition-colors duration-100
+           placeholder:text-ink-faint;
   }
 }

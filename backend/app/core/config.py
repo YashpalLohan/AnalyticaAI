@@ -68,9 +68,12 @@ class Settings(BaseSettings):
     ENABLE_ANOMALY_DETECTION: bool = False
     ENABLE_WEBSOCKETS: bool = False
 
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
+    model_config = {
+        "env_file": ".env",
+        "case_sensitive": True,
+        "env_file_encoding": "utf-8",
+        "extra": "ignore",  # Ignore .env keys not defined in Settings
+    }
 
 
 settings = Settings()
