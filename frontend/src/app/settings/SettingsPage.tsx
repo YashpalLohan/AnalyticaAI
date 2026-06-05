@@ -1,4 +1,5 @@
-import { User, Mail, Shield, Database, LogOut, Key } from 'lucide-react'
+import { User, Mail, Shield, Database, LogOut, Key, UserPlus } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { useQuery } from '@tanstack/react-query'
 import datasetService from '../../services/dataset.service'
@@ -29,7 +30,7 @@ function Row({ label, value, icon: Icon }: { label: string; value: string; icon?
 }
 
 export default function SettingsPage() {
-  const { user, logout } = useAuth()
+  const { user, isGuest, logout } = useAuth()
 
   const { data: datasetsData } = useQuery({
     queryKey: ['datasets'],
@@ -51,9 +52,29 @@ export default function SettingsPage() {
 
         {/* Profile */}
         <Section title="Profile">
-          <Row icon={User}   label="Full Name" value={user?.full_name || '—'} />
-          <Row icon={Mail}   label="Email"     value={user?.email || '—'} />
-          <Row icon={Shield} label="Account Status" value={user?.is_verified ? 'Verified' : 'Unverified'} />
+          {isGuest ? (
+            <div className="px-5 py-5">
+              <p className="label mb-1 text-warning">Guest Account</p>
+              <p className="text-xs text-ink-faint mb-4 leading-relaxed">
+                You're using AnalyticaAI as a guest. Create a free account to save your work across devices and access it from anywhere.
+              </p>
+              <div className="flex items-center gap-3">
+                <Link to="/register" className="btn-primary flex items-center gap-2 text-xs py-2.5 px-5">
+                  <UserPlus size={13} />
+                  Create Free Account
+                </Link>
+                <Link to="/login" className="btn-secondary text-xs py-2.5 px-5">
+                  Sign In
+                </Link>
+              </div>
+            </div>
+          ) : (
+            <>
+              <Row icon={User}   label="Full Name" value={user?.full_name || '—'} />
+              <Row icon={Mail}   label="Email"     value={user?.email || '—'} />
+              <Row icon={Shield} label="Account Status" value={user?.is_verified ? 'Verified' : 'Unverified'} />
+            </>
+          )}
         </Section>
 
         {/* Usage */}
@@ -62,7 +83,8 @@ export default function SettingsPage() {
           <Row icon={Key}      label="API Model"          value="Groq — Llama 3.3 70B Versatile" />
         </Section>
 
-        {/* Danger zone */}
+        {/* Account */}
+        {!isGuest && (
         <Section title="Account">
           <div className="px-5 py-4">
             <p className="text-xs text-ink-faint mb-4 leading-relaxed">
@@ -77,6 +99,7 @@ export default function SettingsPage() {
             </button>
           </div>
         </Section>
+        )}
 
       </div>
     </div>

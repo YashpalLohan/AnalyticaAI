@@ -14,7 +14,8 @@ interface AuthState {
   accessToken: string | null
   refreshToken: string | null
   isAuthenticated: boolean
-  setAuth: (user: User, accessToken: string, refreshToken: string) => void
+  isGuest: boolean
+  setAuth: (user: User, accessToken: string, refreshToken: string, isGuest?: boolean) => void
   clearAuth: () => void
 }
 
@@ -25,17 +26,18 @@ export const useAuthStore = create<AuthState>()(
       accessToken: null,
       refreshToken: null,
       isAuthenticated: false,
-      setAuth: (user, accessToken, refreshToken) => {
+      isGuest: false,
+      setAuth: (user, accessToken, refreshToken, isGuest = false) => {
         localStorage.setItem('access_token', accessToken)
         localStorage.setItem('refresh_token', refreshToken)
-        set({ user, accessToken, refreshToken, isAuthenticated: true })
+        set({ user, accessToken, refreshToken, isAuthenticated: true, isGuest })
       },
       clearAuth: () => {
         localStorage.removeItem('access_token')
         localStorage.removeItem('refresh_token')
-        set({ user: null, accessToken: null, refreshToken: null, isAuthenticated: false })
+        set({ user: null, accessToken: null, refreshToken: null, isAuthenticated: false, isGuest: false })
       },
     }),
-    { name: 'auth-storage', partialize: (state) => ({ user: state.user, isAuthenticated: state.isAuthenticated }) }
+    { name: 'auth-storage', partialize: (state) => ({ user: state.user, isAuthenticated: state.isAuthenticated, isGuest: state.isGuest }) }
   )
 )

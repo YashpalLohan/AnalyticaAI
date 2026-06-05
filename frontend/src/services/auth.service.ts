@@ -27,6 +27,11 @@ export interface UserProfile {
 }
 
 const authService = {
+  async guest(): Promise<TokenResponse> {
+    const response = await apiClient.post<TokenResponse>('/auth/guest')
+    return response.data
+  },
+
   async register(data: RegisterData) {
     const response = await apiClient.post('/auth/register', data)
     return response.data

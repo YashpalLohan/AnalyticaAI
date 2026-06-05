@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import { LogOut, Menu, X } from 'lucide-react'
 import { useAuth } from '../../hooks/useAuth'
 import Sidebar from './Sidebar'
+import GuestBanner from '../GuestBanner'
 
 export default function AppLayout() {
   const { user, logout } = useAuth()
@@ -38,6 +39,9 @@ export default function AppLayout() {
           </button>
         </div>
       </nav>
+
+      {/* ── Guest banner ── */}
+      <GuestBanner />
 
       {/* ── Body: sidebar + content ── */}
       <div className="flex flex-1 relative">

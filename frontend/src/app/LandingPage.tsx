@@ -32,9 +32,14 @@ export default function LandingPage() {
               <span key={l} className="label cursor-pointer hover:text-ink transition-colors">{l}</span>
             ))}
           </div>
-          <Link to="/register" className="btn-primary text-xs py-2.5 px-5">
-            Initialize →
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link to="/dashboard" className="label hover:text-ink transition-colors hidden md:block">
+              Try free
+            </Link>
+            <Link to="/register" className="btn-primary text-xs py-2.5 px-5">
+              Get started →
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -66,8 +71,11 @@ export default function LandingPage() {
               <Link to="/register" className="btn-primary">
                 Start for free →
               </Link>
-              <Link to="/login" className="btn-secondary text-center">
-                Sign in
+              <Link to="/dashboard" className="btn-secondary text-center">
+                Try without account
+              </Link>
+              <Link to="/login" className="text-center text-xs text-ink-faint hover:text-ink transition-colors py-1">
+                Sign in →
               </Link>
             </div>
           </div>
@@ -140,9 +148,14 @@ export default function LandingPage() {
             Ready to talk to<br />
             <span className="text-blue">your data?</span>
           </h2>
-          <Link to="/register" className="btn-primary text-base px-10 py-4">
-            Initialize Free Account →
-          </Link>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Link to="/register" className="btn-primary text-base px-10 py-4">
+              Create free account →
+            </Link>
+            <Link to="/dashboard" className="btn-secondary text-base px-10 py-4">
+              Try without account
+            </Link>
+          </div>
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 """
 AnalyticaAI — Auth Business Logic
 """
+import uuid
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
@@ -76,5 +77,36 @@ async def refresh_access_token(refresh_token: str, db: AsyncSession) -> TokenRes
     return TokenResponse(
         access_token=new_access_token,
         refresh_token=new_refresh_token,
+        expires_in=settings.JWT_ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+    )
+
+
+async def guest_login(db: AsyncSession) -> TokenResponse:
+    """
+    Create a new guest user account automatically.
+    The guest gets a real JWT so the entire backend works unchanged.
+    Guest accounts are identified by email prefix 'guest_'.
+    """
+    guest_id = str(uuid.uuid4())[:8]
+    guest_email = f"guest_{guest_id}@analytica.guest"
+    guest_name = f"Guest User"
+    # Use a random password — guest users never need to know it
+    guest_password = str(uuid.uuid4())
+
+    user = User(
+        full_name=guest_name,
+        email=guest_email,
+        password_hash=hash_password(guest_password),
+        is_verified=False,
+    )
+    db.add(user)
+    await db.flush()
+
+    access_token  = create_access_token({"sub": user.id})
+    refresh_token = create_refresh_token({"sub": user.id})
+
+    return TokenResponse(
+        access_token=access_token,
+        refresh_token=refresh_token,
         expires_in=settings.JWT_ACCESS_TOKEN_EXPIRE_MINUTES * 60,
     )

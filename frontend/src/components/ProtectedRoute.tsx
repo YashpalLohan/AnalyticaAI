@@ -1,28 +1,38 @@
 import { useEffect, useState } from 'react'
-import { Navigate } from 'react-router-dom'
 import { useAuthStore } from '../store/auth.store'
+import authService from '../services/auth.service'
 
 interface Props {
   children: React.ReactNode
 }
 
 export default function ProtectedRoute({ children }: Props) {
-  const { isAuthenticated } = useAuthStore()
-
-  // Zustand persist rehydrates asynchronously from localStorage.
-  // On first render isAuthenticated is false even for logged-in users,
-  // causing an incorrect redirect to /login (blank screen bug).
-  // We wait one tick for the store to hydrate before deciding.
+  const { isAuthenticated, setAuth } = useAuthStore()
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    setReady(true)
+    // Wait one tick for Zustand to rehydrate from localStorage
+    const init = async () => {
+      const hydrated = useAuthStore.getState().isAuthenticated
+      if (!hydrated) {
+        // Not logged in — auto-create a guest session silently
+        try {
+          const tokens = await authService.guest()
+          localStorage.setItem('access_token', tokens.access_token)
+          const me = await authService.getMe()
+          setAuth(me, tokens.access_token, tokens.refresh_token, true)
+        } catch {
+          // If guest creation fails (e.g. backend offline), still render the app
+          // The individual API calls will fail gracefully with toasts
+        }
+      }
+      setReady(true)
+    }
+    init()
   }, [])
 
-  // Render nothing for one tick while Zustand rehydrates
+  // Show nothing while setting up guest session (usually < 500ms)
   if (!ready) return null
-
-  if (!isAuthenticated) return <Navigate to="/login" replace />
 
   return <>{children}</>
 }
