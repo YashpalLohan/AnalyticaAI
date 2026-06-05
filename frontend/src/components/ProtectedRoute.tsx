@@ -8,22 +8,21 @@ interface Props {
 
 export default function ProtectedRoute({ children }: Props) {
   const { isAuthenticated } = useAuthStore()
-  const [hydrated, setHydrated] = useState(false)
 
-  // Wait for Zustand's persist middleware to rehydrate from localStorage
-  // before making the redirect decision. Without this, a page refresh on
-  // /dashboard incorrectly redirects to /login because isAuthenticated is
-  // still false during the async rehydration tick.
+  // Zustand persist rehydrates asynchronously from localStorage.
+  // On first render isAuthenticated is false even for logged-in users,
+  // causing an incorrect redirect to /login (blank screen bug).
+  // We wait one tick for the store to hydrate before deciding.
+  const [ready, setReady] = useState(false)
+
   useEffect(() => {
-    const unsub = useAuthStore.persist.onFinishHydration(() => setHydrated(true))
-    // If already hydrated (e.g. navigating within the app), resolve immediately
-    if (useAuthStore.persist.hasHydrated()) setHydrated(true)
-    return unsub
+    setReady(true)
   }, [])
 
-  // Show nothing while waiting for hydration — avoids flash of /login
-  if (!hydrated) return null
+  // Render nothing for one tick while Zustand rehydrates
+  if (!ready) return null
 
   if (!isAuthenticated) return <Navigate to="/login" replace />
+
   return <>{children}</>
 }
