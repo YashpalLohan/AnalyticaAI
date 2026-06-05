@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import {
   LayoutDashboard,
   Database,
@@ -9,49 +9,39 @@ import {
 } from 'lucide-react'
 
 const navItems = [
-  { to: '/dashboard', icon: LayoutDashboard, label: 'Home',      sub: 'Overview',         built: true  },
-  { to: '/datasets',  icon: Database,         label: 'Datasets',  sub: 'Upload & manage',  built: true  },
-  { to: '/datasets',  icon: MessageSquare,    label: 'Chat',      sub: 'Ask your data',    built: true  },
-  { to: '/datasets',  icon: BarChart2,        label: 'Analytics', sub: 'EDA & dashboard',  built: true  },
-  { to: '/datasets',  icon: FileText,         label: 'Reports',   sub: 'Insights & export',built: true  },
+  { to: '/dashboard', icon: LayoutDashboard, label: 'Home',      sub: 'Overview'          },
+  { to: '/datasets',  icon: Database,         label: 'Datasets',  sub: 'Upload & manage'   },
+  { to: '/chat',      icon: MessageSquare,    label: 'Chat',      sub: 'Ask your data'     },
+  { to: '/analytics', icon: BarChart2,        label: 'Analytics', sub: 'EDA & dashboard'   },
+  { to: '/reports',   icon: FileText,         label: 'Reports',   sub: 'Insights & export' },
 ]
 
 export default function Sidebar() {
   const location = useLocation()
-  const isDatasetActive = location.pathname.startsWith('/datasets')
 
   return (
     <aside className="w-[220px] bg-linen border-r border-border flex flex-col min-h-full">
       <nav className="flex-1 pt-4">
-        {navItems.map((item, idx) => {
-          // For the Datasets group (indices 1-4), only the first one (Datasets)
-          // gets the active highlight — the others just navigate there without highlight
-          const forceActive = item.to === '/datasets' && idx === 1 && isDatasetActive
-
-          return (
-            <NavLink
-              key={`${item.to}-${idx}`}
-              to={item.to}
-              className={({ isActive }) => {
-                const active = (item.to === '/dashboard' && isActive) || forceActive
-                return (
-                  `flex items-center gap-3 px-5 py-3 transition-colors ` +
-                  (active
-                    ? 'bg-navy text-linen border-r-2 border-blue'
-                    : 'text-ink-faint hover:text-ink hover:bg-linen-dark')
-                )
-              }}
-            >
-              <item.icon size={14} className="flex-shrink-0" />
-              <div className="min-w-0">
-                <p className="label leading-none">{item.label}</p>
-                <p className="text-[10px] text-ink-faint/70 mt-0.5 normal-case tracking-normal font-normal truncate">
-                  {item.sub}
-                </p>
-              </div>
-            </NavLink>
-          )
-        })}
+        {navItems.map(item => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-5 py-3 transition-colors ` +
+              (isActive
+                ? 'bg-navy text-linen border-r-2 border-blue'
+                : 'text-ink-faint hover:text-ink hover:bg-linen-dark')
+            }
+          >
+            <item.icon size={14} className="flex-shrink-0" />
+            <div className="min-w-0">
+              <p className="label leading-none">{item.label}</p>
+              <p className="text-[10px] text-ink-faint/70 mt-0.5 normal-case tracking-normal font-normal truncate">
+                {item.sub}
+              </p>
+            </div>
+          </NavLink>
+        ))}
       </nav>
 
       <div className="border-t border-border">

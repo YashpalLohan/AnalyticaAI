@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
+import { MessageSquare, BarChart2, FileText } from 'lucide-react'
 
 import LandingPage from './app/LandingPage'
 import LoginPage from './app/auth/LoginPage'
@@ -11,6 +12,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import DashboardPage from './app/dashboard/DashboardPage'
 import DatasetsPage from './app/datasets/DatasetsPage'
 import DatasetWorkspacePage from './app/datasets/DatasetWorkspacePage'
+import DatasetPickerPage from './app/DatasetPickerPage'
 
 export default function App() {
   return (
@@ -44,11 +46,38 @@ export default function App() {
         >
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/datasets" element={<DatasetsPage />} />
-          {/* Phase 2: Dataset Workspace with profiling tabs */}
           <Route path="/datasets/:id" element={<DatasetWorkspacePage />} />
-          <Route path="/chat" element={<ComingSoon label="AI Chat" phase={4} />} />
-          <Route path="/analytics" element={<ComingSoon label="Analytics" phase={3} />} />
-          <Route path="/reports" element={<ComingSoon label="Reports" phase={6} />} />
+
+          {/* Phase 4 — Chat picker */}
+          <Route path="/chat" element={
+            <DatasetPickerPage
+              tab="chat"
+              label="AI Chat"
+              description="Select a dataset to start chatting with your data in natural language."
+              icon={MessageSquare}
+            />
+          } />
+
+          {/* Phase 3+5 — Analytics picker */}
+          <Route path="/analytics" element={
+            <DatasetPickerPage
+              tab="eda"
+              label="Analytics"
+              description="Select a dataset to explore EDA charts, correlation heatmap, and auto-generated dashboards."
+              icon={BarChart2}
+            />
+          } />
+
+          {/* Phase 6 — Reports picker */}
+          <Route path="/reports" element={
+            <DatasetPickerPage
+              tab="reports"
+              label="Reports"
+              description="Select a dataset to generate AI insights and download PDF or DOCX reports."
+              icon={FileText}
+            />
+          } />
+
           <Route path="/settings" element={<ComingSoon label="Settings" phase={7} />} />
         </Route>
 

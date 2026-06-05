@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { ArrowLeft, Loader2, RefreshCw, BarChart2, Sparkles, LayoutDashboard, FileText, TrendingUp, MessageSquare } from 'lucide-react'
 import toast from 'react-hot-toast'
@@ -77,8 +77,14 @@ function ProfilingSkeleton() {
 export default function DatasetWorkspacePage() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const queryClient = useQueryClient()
-  const [activeTab, setActiveTab] = useState<TabId>('overview')
+
+  // Default to the tab specified in ?tab= query param (from DatasetPickerPage)
+  const initialTab = (searchParams.get('tab') as TabId) || 'overview'
+  const [activeTab, setActiveTab] = useState<TabId>(
+    TABS.find(t => t.id === initialTab && t.available) ? initialTab : 'overview'
+  )
   const [profiling, setProfiling] = useState(false)
   const [profile, setProfile] = useState<DatasetProfile | null>(null)
 
