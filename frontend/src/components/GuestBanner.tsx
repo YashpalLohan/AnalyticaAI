@@ -1,14 +1,33 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { UserPlus } from 'lucide-react'
 import { useAuthStore } from '../store/auth.store'
-import { getGuestUsage, GUEST_LIMIT } from '../lib/guestUsage'
+import { GUEST_LIMIT } from '../lib/guestUsage'
+
+const STORAGE_KEY = 'guest_usage_count'
 
 export default function GuestBanner() {
   const { isGuest } = useAuthStore()
 
+  // Read count from localStorage and stay in sync via storage events
+  const [used, setUsed] = useState<number>(() =>
+    parseInt(localStorage.getItem(STORAGE_KEY) ?? '0', 10)
+  )
+
+  useEffect(() => {
+    if (!isGuest) return
+
+    // Re-read on every render cycle tick (covers same-tab updates)
+    const interval = setInterval(() => {
+      const latest = parseInt(localStorage.getItem(STORAGE_KEY) ?? '0', 10)
+      setUsed(latest)
+    }, 500)
+
+    return () => clearInterval(interval)
+  }, [isGuest])
+
   if (!isGuest) return null
 
-  const used = getGuestUsage()
   const left = Math.max(0, GUEST_LIMIT - used)
 
   return (
