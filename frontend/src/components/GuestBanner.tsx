@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { UserPlus } from 'lucide-react'
 import { useAuthStore } from '../store/auth.store'
-import { GUEST_LIMIT } from '../lib/guestUsage'
+import { GUEST_LIMIT, isGuestEmail } from '../lib/guestUsage'
 
 const STORAGE_KEY = 'guest_usage_count'
 
 export default function GuestBanner() {
-  const { isGuest } = useAuthStore()
+  const { user } = useAuthStore()
+  const isGuest = isGuestEmail(user?.email)
 
   // Read count from localStorage and stay in sync via storage events
   const [used, setUsed] = useState<number>(() =>

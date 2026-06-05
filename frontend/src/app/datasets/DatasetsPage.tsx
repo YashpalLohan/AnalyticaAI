@@ -7,6 +7,7 @@ import datasetService, { Dataset } from '../../services/dataset.service'
 import UploadZone from '../../features/datasets/UploadZone'
 import DatasetList from '../../features/datasets/DatasetList'
 import { useAuthStore } from '../../store/auth.store'
+import { isGuestEmail } from '../../lib/guestUsage'
 
 const GUEST_DATASET_LIMIT = 3
 
@@ -14,7 +15,8 @@ export default function DatasetsPage() {
   const [showUpload, setShowUpload] = useState(false)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const { isGuest } = useAuthStore()
+  const { user } = useAuthStore()
+  const isGuest = isGuestEmail(user?.email)
 
   const { data, isLoading } = useQuery({
     queryKey: ['datasets'],

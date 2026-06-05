@@ -11,6 +11,8 @@ import EDATab from '../../features/eda/EDATab'
 import ChatTab from '../../features/chat/ChatTab'
 import DashboardTab from '../../features/dashboard/DashboardTab'
 import InsightsTab from '../../features/insights/InsightsTab'
+import GuestLimitModal from '../../components/GuestLimitModal'
+import { useGuestLimit } from '../../hooks/useGuestLimit'
 
 import type { LucideIcon } from 'lucide-react'
 
@@ -87,6 +89,7 @@ export default function DatasetWorkspacePage() {
   )
   const [profiling, setProfiling] = useState(false)
   const [profile, setProfile] = useState<DatasetProfile | null>(null)
+  const { checkLimit, showModal, closeModal } = useGuestLimit()
 
   // Fetch dataset metadata
   const { data: dataset, isLoading: datasetLoading } = useQuery<Dataset>({
@@ -110,6 +113,7 @@ export default function DatasetWorkspacePage() {
 
   const handleTriggerProfile = async () => {
     if (!id) return
+    if (!checkLimit()) return   // guest limit gate
     setProfiling(true)
     try {
       const result = await profileService.triggerProfile(id)
@@ -154,6 +158,7 @@ export default function DatasetWorkspacePage() {
 
   return (
     <div className="max-w-[1200px] mx-auto px-6 py-8">
+      {showModal && <GuestLimitModal onClose={closeModal} />}
 
       {/* ── Breadcrumb / header ── */}
       <div className="mb-6">
