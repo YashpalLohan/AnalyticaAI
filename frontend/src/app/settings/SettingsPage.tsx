@@ -62,16 +62,6 @@ export default function SettingsPage() {
           <Row icon={Key}      label="API Model"          value="Groq — Llama 3.3 70B Versatile" />
         </Section>
 
-        {/* Tech stack */}
-        <Section title="Stack">
-          <Row label="Frontend"  value="React 18 · TypeScript · Vite · Tailwind CSS" />
-          <Row label="Backend"   value="FastAPI · Python 3.12 · SQLAlchemy · Alembic" />
-          <Row label="AI Layer"  value="LangChain · Groq · Llama 3.3 70B" />
-          <Row label="Database"  value="PostgreSQL 15" />
-          <Row label="Storage"   value="Local (dev) · Supabase (prod)" />
-          <Row label="Version"   value="1.0.0 — All phases complete" />
-        </Section>
-
         {/* Danger zone */}
         <Section title="Account">
           <div className="px-5 py-4">
