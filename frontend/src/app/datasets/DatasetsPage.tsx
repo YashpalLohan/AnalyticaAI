@@ -1,15 +1,20 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { Plus, X } from 'lucide-react'
+import { Plus, X, Lock } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import datasetService, { Dataset } from '../../services/dataset.service'
 import UploadZone from '../../features/datasets/UploadZone'
 import DatasetList from '../../features/datasets/DatasetList'
+import { useAuthStore } from '../../store/auth.store'
+
+const GUEST_DATASET_LIMIT = 3
 
 export default function DatasetsPage() {
   const [showUpload, setShowUpload] = useState(false)
   const queryClient = useQueryClient()
   const navigate = useNavigate()
+  const { isGuest } = useAuthStore()
 
   const { data, isLoading } = useQuery({
     queryKey: ['datasets'],
@@ -17,6 +22,12 @@ export default function DatasetsPage() {
   })
 
   const datasets = data?.datasets ?? []
+  const guestLimitReached = isGuest && datasets.length >= GUEST_DATASET_LIMIT
+
+  const handleUploadClick = () => {
+    if (guestLimitReached) return   // button is disabled, but guard anyway
+    setShowUpload(prev => !prev)
+  }
 
   const handleUploaded = (_dataset: Dataset) => {
     queryClient.invalidateQueries({ queryKey: ['datasets'] })
@@ -47,16 +58,50 @@ export default function DatasetsPage() {
           <p className="label-blue mb-1">Data Laboratory</p>
           <h1 className="text-2xl font-black uppercase tracking-tight text-ink">Datasets</h1>
         </div>
-        <button
-          className="btn-primary flex items-center gap-2 text-xs py-2.5 px-5"
-          onClick={() => setShowUpload(!showUpload)}
-        >
-          {showUpload ? <><X size={13} /> Cancel</> : <><Plus size={13} /> Upload Dataset</>}
-        </button>
+
+        {guestLimitReached ? (
+          <div className="flex items-center gap-3">
+            <p className="text-xs text-ink-faint hidden sm:block">
+              Guest limit: {GUEST_DATASET_LIMIT} datasets
+            </p>
+            <Link to="/register" className="btn-primary flex items-center gap-2 text-xs py-2.5 px-5">
+              <Lock size={13} />
+              Upgrade to Upload More
+            </Link>
+          </div>
+        ) : (
+          <button
+            className="btn-primary flex items-center gap-2 text-xs py-2.5 px-5"
+            onClick={handleUploadClick}
+          >
+            {showUpload ? <><X size={13} /> Cancel</> : <><Plus size={13} /> Upload Dataset</>}
+          </button>
+        )}
       </div>
 
+      {/* ── Guest dataset limit banner ── */}
+      {guestLimitReached && (
+        <div className="mb-6 border border-warning/30 bg-warning/5 px-5 py-4 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <Lock size={14} className="text-warning flex-shrink-0" />
+            <div>
+              <p className="text-xs font-bold uppercase tracking-wide text-ink">
+                Guest dataset limit reached
+              </p>
+              <p className="text-xs text-ink-faint mt-0.5">
+                You've uploaded {GUEST_DATASET_LIMIT} datasets. Create a free account to upload unlimited datasets.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <Link to="/login"     className="text-xs font-bold text-ink-faint hover:text-ink transition-colors">Sign in</Link>
+            <Link to="/register"  className="btn-primary text-xs py-2 px-4">Create Account</Link>
+          </div>
+        </div>
+      )}
+
       {/* ── Upload panel ── */}
-      {showUpload && (
+      {showUpload && !guestLimitReached && (
         <div className="mb-8">
           <div className="flex items-center justify-between mb-3">
             <p className="label">New Dataset</p>
@@ -91,7 +136,9 @@ export default function DatasetsPage() {
 
       {/* ── Count ── */}
       {datasets.length > 0 && (
-        <p className="label mt-4 text-right">{datasets.length} dataset{datasets.length !== 1 ? 's' : ''}</p>
+        <p className="label mt-4 text-right">
+          {datasets.length}{isGuest ? `/${GUEST_DATASET_LIMIT}` : ''} dataset{datasets.length !== 1 ? 's' : ''}
+        </p>
       )}
 
     </div>
