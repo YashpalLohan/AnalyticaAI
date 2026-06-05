@@ -17,8 +17,6 @@ const navItems = [
 ]
 
 export default function Sidebar() {
-  const location = useLocation()
-
   return (
     <aside className="w-[220px] bg-linen border-r border-border flex flex-col min-h-full">
       <nav className="flex-1 pt-4">
