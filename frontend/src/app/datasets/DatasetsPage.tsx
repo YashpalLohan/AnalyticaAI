@@ -7,9 +7,12 @@ import datasetService, { Dataset } from '../../services/dataset.service'
 import UploadZone from '../../features/datasets/UploadZone'
 import DatasetList from '../../features/datasets/DatasetList'
 import { useAuthStore } from '../../store/auth.store'
-import { isGuestEmail, isGuestUploadLimitReached, getGuestUploadCount, GUEST_DATASET_LIMIT } from '../../lib/guestUsage'
-
-const GUEST_DATASET_LIMIT = 3
+import {
+  isGuestEmail,
+  isGuestUploadLimitReached,
+  getGuestUploadCount,
+  GUEST_DATASET_LIMIT,
+} from '../../lib/guestUsage'
 
 export default function DatasetsPage() {
   const [showUpload, setShowUpload] = useState(false)
@@ -17,7 +20,8 @@ export default function DatasetsPage() {
   const navigate = useNavigate()
   const { user } = useAuthStore()
   const isGuest = isGuestEmail(user?.email)
-  // Use lifetime upload count (not current dataset count) — deletion-proof
+
+  // Deletion-proof: based on lifetime upload IDs, not current dataset count
   const guestLimitReached = isGuest && isGuestUploadLimitReached()
   const guestUploadCount  = isGuest ? getGuestUploadCount() : 0
 
@@ -27,10 +31,9 @@ export default function DatasetsPage() {
   })
 
   const datasets = data?.datasets ?? []
-  const guestLimitReached = isGuest && datasets.length >= GUEST_DATASET_LIMIT
 
   const handleUploadClick = () => {
-    if (guestLimitReached) return   // button is disabled, but guard anyway
+    if (guestLimitReached) return
     setShowUpload(prev => !prev)
   }
 
@@ -67,7 +70,7 @@ export default function DatasetsPage() {
         {guestLimitReached ? (
           <div className="flex items-center gap-3">
             <p className="text-xs text-ink-faint hidden sm:block">
-              Guest limit: {GUEST_DATASET_LIMIT} datasets
+              Guest limit: {GUEST_DATASET_LIMIT} uploads
             </p>
             <Link to="/register" className="btn-primary flex items-center gap-2 text-xs py-2.5 px-5">
               <Lock size={13} />
@@ -91,16 +94,17 @@ export default function DatasetsPage() {
             <Lock size={14} className="text-warning flex-shrink-0" />
             <div>
               <p className="text-xs font-bold uppercase tracking-wide text-ink">
-                Guest dataset limit reached
+                Guest upload limit reached
               </p>
               <p className="text-xs text-ink-faint mt-0.5">
-                You've uploaded {GUEST_DATASET_LIMIT} datasets. Create a free account to upload unlimited datasets.
+                You've used all {GUEST_DATASET_LIMIT} free uploads. Deleting datasets doesn't reset this limit.
+                Create a free account for unlimited uploads.
               </p>
             </div>
           </div>
           <div className="flex items-center gap-2 flex-shrink-0">
-            <Link to="/login"     className="text-xs font-bold text-ink-faint hover:text-ink transition-colors">Sign in</Link>
-            <Link to="/register"  className="btn-primary text-xs py-2 px-4">Create Account</Link>
+            <Link to="/login"    className="text-xs font-bold text-ink-faint hover:text-ink transition-colors">Sign in</Link>
+            <Link to="/register" className="btn-primary text-xs py-2 px-4">Create Account</Link>
           </div>
         </div>
       )}
