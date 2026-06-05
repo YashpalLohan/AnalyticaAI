@@ -5,10 +5,10 @@ import { useAuth } from '../../hooks/useAuth'
 import datasetService from '../../services/dataset.service'
 
 const quickActions = [
-  { tag: '01', icon: Upload,        label: 'Upload Dataset',  desc: 'CSV, XLSX, or JSON',       to: '/datasets',  built: true  },
-  { tag: '02', icon: MessageSquare, label: 'Chat with Data',  desc: 'Open a dataset to chat',   to: '/datasets',  built: true  },
-  { tag: '03', icon: BarChart2,     label: 'View Analytics',  desc: 'Auto-generated charts',     to: '/analytics', built: false },
-  { tag: '04', icon: FileText,      label: 'Export Report',   desc: 'PDF or DOCX',               to: '/reports',   built: false },
+  { tag: '01', icon: Upload,        label: 'Upload Dataset',  desc: 'CSV, XLSX, or JSON',       to: '/datasets',  built: true },
+  { tag: '02', icon: MessageSquare, label: 'Chat with Data',  desc: 'Ask anything',              to: '/chat',      built: true },
+  { tag: '03', icon: BarChart2,     label: 'View Analytics',  desc: 'EDA & auto dashboard',      to: '/analytics', built: true },
+  { tag: '04', icon: FileText,      label: 'Export Report',   desc: 'AI insights + PDF/DOCX',    to: '/reports',   built: true },
 ]
 
 export default function DashboardPage() {
@@ -36,7 +36,7 @@ export default function DashboardPage() {
       <div className="mb-10 border-b border-border pb-8">
         <p className="label-blue mb-2">Dashboard</p>
         <h1 className="text-3xl font-black uppercase tracking-tight text-ink leading-none">
-          Welcome, <span className="text-blue">{user?.full_name?.toUpperCase()}.</span>
+          Welcome{user?.full_name ? <>, <span className="text-blue">{user.full_name.toUpperCase()}.</span></> : '.'} 
         </h1>
       </div>
 

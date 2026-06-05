@@ -26,6 +26,7 @@ export default function Sidebar() {
           <NavLink
             key={item.to}
             to={item.to}
+            end={item.to === '/dashboard'}
             className={({ isActive }) =>
               `flex items-center gap-3 px-5 py-3 transition-colors ` +
               (isActive
