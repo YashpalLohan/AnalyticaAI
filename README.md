@@ -96,7 +96,7 @@ AnalyticaAI/
 
 - Python 3.12+
 - Node.js 20+
-- PostgreSQL 15+
+- Docker Desktop (for PostgreSQL + Redis)
 - A free [Groq API key](https://console.groq.com)
 
 ### 1. Clone
@@ -106,11 +106,22 @@ git clone https://github.com/YashpalLohan/AnalyticaAI.git
 cd AnalyticaAI
 ```
 
-### 2. Backend setup
+### 2. Start the database
+
+Make sure Docker Desktop is running, then:
+
+```bash
+docker-compose up postgres redis -d
+```
+
+This starts PostgreSQL on port `5432` and Redis on port `6379`. Data persists in Docker volumes across restarts.
+
+### 3. Backend setup
 
 ```bash
 cd backend
 python -m venv .venv
+
 # Windows
 .venv\Scripts\activate
 # macOS/Linux
@@ -128,10 +139,12 @@ cp ../.env.example .env
 Minimum required values in `backend/.env`:
 
 ```env
-DATABASE_URL=postgresql://user:password@localhost:5432/analytica_ai
+DATABASE_URL=postgresql://analytica:analytica_password@localhost:5432/analytica_ai
 GROQ_API_KEY=gsk_your_key_here
 JWT_SECRET=your_32_char_secret_here
 ```
+
+> The default `DATABASE_URL` matches the Docker Compose credentials exactly — no changes needed if you used `docker-compose up postgres`.
 
 Run migrations and start:
 
@@ -140,7 +153,7 @@ alembic upgrade head
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### 3. Frontend setup
+### 4. Frontend setup
 
 ```bash
 cd frontend
@@ -148,7 +161,7 @@ npm install
 npm run dev
 ```
 
-### 4. Open the app
+### 5. Open the app
 
 | Service | URL |
 |---|---|
@@ -158,12 +171,14 @@ npm run dev
 
 ---
 
-## Docker (optional)
-
-Spin up the full stack with one command:
+## Stopping the stack
 
 ```bash
-docker-compose up --build
+# Stop database containers (data is preserved)
+docker-compose stop postgres redis
+
+# Stop and remove containers + volumes (wipes data)
+docker-compose down -v
 ```
 
 ---
