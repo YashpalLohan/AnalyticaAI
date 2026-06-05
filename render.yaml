@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: analyticaai-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DEBUG
+        value: false
+      - key: DATABASE_URL
+        sync: false          # Set manually in Render dashboard
+      - key: JWT_SECRET
+        generateValue: true  # Render auto-generates a secure random value
+      - key: GROQ_API_KEY
+        sync: false
+      - key: STORAGE_PROVIDER
+        value: supabase
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_STORAGE_BUCKET
+        value: analytica-ai
+      - key: ALLOWED_ORIGINS
+        sync: false          # Set to your Vercel frontend URL
+      - key: EMBEDDING_PROVIDER
+        value: nomic_api     # Use Nomic API in prod (no Ollama on Render)
+      - key: NOMIC_API_KEY
+        sync: false
+      - key: LOG_LEVEL
+        value: INFO
