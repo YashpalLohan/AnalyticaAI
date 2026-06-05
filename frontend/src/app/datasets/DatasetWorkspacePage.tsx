@@ -9,6 +9,7 @@ import OverviewTab from '../../features/profiling/OverviewTab'
 import CleaningTab from '../../features/profiling/CleaningTab'
 import EDATab from '../../features/eda/EDATab'
 import ChatTab from '../../features/chat/ChatTab'
+import DashboardTab from '../../features/dashboard/DashboardTab'
 
 import type { LucideIcon } from 'lucide-react'
 
@@ -29,7 +30,7 @@ const TABS: TabDef[] = [
   { id: 'cleaning',   label: 'Cleaning',   icon: Sparkles,        phase: 2, available: true  },
   { id: 'eda',        label: 'EDA',        icon: TrendingUp,      phase: 3, available: true  },
   { id: 'chat',       label: 'Chat',       icon: MessageSquare,   phase: 4, available: true  },
-  { id: 'dashboard',  label: 'Dashboard',  icon: LayoutDashboard, phase: 5, available: false },
+  { id: 'dashboard',  label: 'Dashboard',  icon: LayoutDashboard, phase: 5, available: true  },
   { id: 'reports',    label: 'Reports',    icon: FileText,        phase: 6, available: false },
 ]
 
@@ -308,8 +309,29 @@ export default function DatasetWorkspacePage() {
           </>
         )}
 
+        {/* Dashboard */}
+        {activeTab === 'dashboard' && (
+          <>
+            {!profile && (
+              <div className="border border-border bg-linen p-12 text-center">
+                <LayoutDashboard size={32} className="text-ink-faint mx-auto mb-3" />
+                <p className="font-bold text-sm uppercase tracking-wide text-ink mb-2">
+                  Profile First
+                </p>
+                <p className="text-xs text-ink-faint mb-6">
+                  Profile the dataset first to enable dashboard generation.
+                </p>
+                <button onClick={handleTriggerProfile} className="btn-primary text-xs py-2.5 px-6">
+                  Profile Dataset
+                </button>
+              </div>
+            )}
+            {profile && <DashboardTab datasetId={id!} />}
+          </>
+        )}
+
         {/* Future tabs */}
-        {(activeTab === 'dashboard' || activeTab === 'reports') && (
+        {activeTab === 'reports' && (
           <div className="border border-border bg-linen p-16 text-center">
             <p className="label-blue mb-3">
               Phase {TABS.find(t => t.id === activeTab)?.phase}
