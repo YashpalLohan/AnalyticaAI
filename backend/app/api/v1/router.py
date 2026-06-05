@@ -29,11 +29,8 @@ api_router.include_router(chat.router, prefix="/chat", tags=["Chat"])
 # ── Phase 5 ──
 from app.api.v1.endpoints import dashboards
 api_router.include_router(dashboards.router, prefix="/datasets", tags=["Dashboards"])
-# from app.api.v1.endpoints import chat
-# api_router.include_router(chat.router, prefix="/chat", tags=["Chat"])
-# from app.api.v1.endpoints import insights
-# api_router.include_router(insights.router, prefix="/datasets", tags=["Insights"])
-# from app.api.v1.endpoints import reports
-# api_router.include_router(reports.router, prefix="/reports", tags=["Reports"])
-# from app.api.v1.endpoints import jobs
-# api_router.include_router(jobs.router, prefix="/jobs", tags=["Jobs"])
+
+# ── Phase 6 ──
+from app.api.v1.endpoints import insights, reports
+api_router.include_router(insights.router, prefix="/datasets", tags=["Insights"])
+api_router.include_router(reports.router,  prefix="/datasets", tags=["Reports"])

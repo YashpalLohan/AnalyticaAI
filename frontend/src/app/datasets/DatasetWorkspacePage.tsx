@@ -10,6 +10,7 @@ import CleaningTab from '../../features/profiling/CleaningTab'
 import EDATab from '../../features/eda/EDATab'
 import ChatTab from '../../features/chat/ChatTab'
 import DashboardTab from '../../features/dashboard/DashboardTab'
+import InsightsTab from '../../features/insights/InsightsTab'
 
 import type { LucideIcon } from 'lucide-react'
 
@@ -31,7 +32,7 @@ const TABS: TabDef[] = [
   { id: 'eda',        label: 'EDA',        icon: TrendingUp,      phase: 3, available: true  },
   { id: 'chat',       label: 'Chat',       icon: MessageSquare,   phase: 4, available: true  },
   { id: 'dashboard',  label: 'Dashboard',  icon: LayoutDashboard, phase: 5, available: true  },
-  { id: 'reports',    label: 'Reports',    icon: FileText,        phase: 6, available: false },
+  { id: 'reports',    label: 'Reports',    icon: FileText,        phase: 6, available: true  },
 ]
 
 // ── Status badge ──────────────────────────────────────────────────────────
@@ -332,14 +333,25 @@ export default function DatasetWorkspacePage() {
 
         {/* Future tabs */}
         {activeTab === 'reports' && (
-          <div className="border border-border bg-linen p-16 text-center">
-            <p className="label-blue mb-3">
-              Phase {TABS.find(t => t.id === activeTab)?.phase}
-            </p>
-            <p className="font-bold text-sm uppercase tracking-wide text-ink">
-              {TABS.find(t => t.id === activeTab)?.label} — Coming Soon
-            </p>
-          </div>
+          <>
+            {!profile && (
+              <div className="border border-border bg-linen p-12 text-center">
+                <FileText size={32} className="text-ink-faint mx-auto mb-3" />
+                <p className="font-bold text-sm uppercase tracking-wide text-ink mb-2">
+                  Profile First
+                </p>
+                <p className="text-xs text-ink-faint mb-6">
+                  Profile the dataset first to enable insight and report generation.
+                </p>
+                <button onClick={handleTriggerProfile} className="btn-primary text-xs py-2.5 px-6">
+                  Profile Dataset
+                </button>
+              </div>
+            )}
+            {profile && (
+              <InsightsTab datasetId={id!} datasetName={dataset.name} />
+            )}
+          </>
         )}
       </div>
     </div>
