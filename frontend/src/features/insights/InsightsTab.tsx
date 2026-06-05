@@ -3,6 +3,8 @@ import { Sparkles, RefreshCw, FileText, FileDown, Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import insightsService, { InsightsResult } from '../../services/insights.service'
 import InsightCard from './InsightCard'
+import GuestLimitModal from '../../components/GuestLimitModal'
+import { useGuestLimit } from '../../hooks/useGuestLimit'
 
 interface Props {
   datasetId: string
@@ -52,6 +54,7 @@ export default function InsightsTab({ datasetId, datasetName = 'dataset' }: Prop
   const [loading, setLoading]         = useState(false)
   const [pdfLoading, setPdfLoading]   = useState(false)
   const [docxLoading, setDocxLoading] = useState(false)
+  const { checkLimit, showModal, closeModal } = useGuestLimit()
 
   // Load cached insights on mount
   useEffect(() => {
@@ -61,6 +64,7 @@ export default function InsightsTab({ datasetId, datasetName = 'dataset' }: Prop
   }, [datasetId])
 
   const handleGenerate = async () => {
+    if (!checkLimit()) return
     setLoading(true)
     try {
       const data = await insightsService.generate(datasetId)
@@ -102,21 +106,24 @@ export default function InsightsTab({ datasetId, datasetName = 'dataset' }: Prop
   // ── Empty state ──
   if (!result && !loading) {
     return (
-      <div className="border border-border bg-linen p-16 text-center">
-        <Sparkles size={36} className="text-ink-faint mx-auto mb-4" />
-        <p className="label-blue mb-2">AI Insights</p>
-        <p className="font-bold text-sm uppercase tracking-wide text-ink mb-2">
-          No Insights Yet
-        </p>
-        <p className="text-xs text-ink-faint max-w-sm mx-auto mb-6 leading-relaxed">
-          The AI will analyze your dataset and surface trends, risks,
-          opportunities, and recommendations with specific numbers.
-        </p>
-        <button onClick={handleGenerate} className="btn-primary text-xs py-2.5 px-6">
-          <Sparkles size={13} />
-          Generate Insights
-        </button>
-      </div>
+      <>
+        {showModal && <GuestLimitModal onClose={closeModal} />}
+        <div className="border border-border bg-linen p-16 text-center">
+          <Sparkles size={36} className="text-ink-faint mx-auto mb-4" />
+          <p className="label-blue mb-2">AI Insights</p>
+          <p className="font-bold text-sm uppercase tracking-wide text-ink mb-2">
+            No Insights Yet
+          </p>
+          <p className="text-xs text-ink-faint max-w-sm mx-auto mb-6 leading-relaxed">
+            The AI will analyze your dataset and surface trends, risks,
+            opportunities, and recommendations with specific numbers.
+          </p>
+          <button onClick={handleGenerate} className="btn-primary text-xs py-2.5 px-6">
+            <Sparkles size={13} />
+            Generate Insights
+          </button>
+        </div>
+      </>
     )
   }
 
@@ -144,6 +151,7 @@ export default function InsightsTab({ datasetId, datasetName = 'dataset' }: Prop
 
   return (
     <div className="space-y-8">
+      {showModal && <GuestLimitModal onClose={closeModal} />}
 
       {/* Header */}
       <div className="flex items-start justify-between gap-4">

@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import { MessageSquare, Sparkles, Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
-import chatService, { ChatMessage, ChatSession } from '../../services/chat.service'
+import chatService, { ChatMessage } from '../../services/chat.service'
 import MessageBubble from './MessageBubble'
 import ChatInput from './ChatInput'
 import SuggestedPrompts from './SuggestedPrompts'
+import GuestLimitModal from '../../components/GuestLimitModal'
+import { useGuestLimit } from '../../hooks/useGuestLimit'
 
 interface Props {
   datasetId: string
@@ -37,6 +39,7 @@ export default function ChatTab({ datasetId }: Props) {
   const [loading, setLoading] = useState(false)
   const [followUps, setFollowUps] = useState<string[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const { checkLimit, showModal, closeModal, usageLeft } = useGuestLimit()
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -64,6 +67,8 @@ export default function ChatTab({ datasetId }: Props) {
   }, [datasetId])
 
   const handleSendMessage = async (text: string) => {
+    if (!checkLimit()) return   // blocks if guest limit reached
+
     // Add user message immediately
     const userMsg: ChatMessage = {
       id: `temp-${Date.now()}`,
@@ -113,6 +118,7 @@ export default function ChatTab({ datasetId }: Props) {
   if (messages.length === 0 && !loading) {
     return (
       <div className="flex flex-col h-[600px]">
+        {showModal && <GuestLimitModal onClose={closeModal} />}
         {/* Empty state */}
         <div className="flex-1 flex flex-col items-center justify-center p-8 border border-border bg-linen">
           <MessageSquare size={48} className="text-ink-faint mb-4" />
@@ -137,6 +143,7 @@ export default function ChatTab({ datasetId }: Props) {
   // ── Chat interface ──
   return (
     <div className="flex flex-col h-[600px]">
+      {showModal && <GuestLimitModal onClose={closeModal} />}
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-6 border border-border bg-linen">
         {messages.map(msg => (

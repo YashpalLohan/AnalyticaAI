@@ -13,6 +13,8 @@ import KPICard from './widgets/KPICard'
 import BarChartWidget from './widgets/BarChartWidget'
 import LineChartWidget from './widgets/LineChartWidget'
 import PieChartWidget from './widgets/PieChartWidget'
+import GuestLimitModal from '../../components/GuestLimitModal'
+import { useGuestLimit } from '../../hooks/useGuestLimit'
 
 interface Props {
   datasetId: string
@@ -59,6 +61,7 @@ function WidgetRenderer({ widget }: { widget: DashboardWidget }) {
 export default function DashboardTab({ datasetId }: Props) {
   const [dashboard, setDashboard] = useState<Dashboard | null>(null)
   const [loading, setLoading] = useState(false)
+  const { checkLimit, showModal, closeModal } = useGuestLimit()
 
   // Try to load cached dashboard on mount
   useEffect(() => {
@@ -68,6 +71,7 @@ export default function DashboardTab({ datasetId }: Props) {
   }, [datasetId])
 
   const handleGenerate = async () => {
+    if (!checkLimit()) return
     setLoading(true)
     try {
       const result = await dashboardService.generate(datasetId)
@@ -84,7 +88,9 @@ export default function DashboardTab({ datasetId }: Props) {
   // ── Empty state ──
   if (!dashboard && !loading) {
     return (
-      <div className="border border-border bg-linen p-16 text-center">
+      <>
+        {showModal && <GuestLimitModal onClose={closeModal} />}
+        <div className="border border-border bg-linen p-16 text-center">
         <LayoutDashboard size={36} className="text-ink-faint mx-auto mb-4" />
         <p className="label-blue mb-2">AI Dashboard</p>
         <p className="font-bold text-sm uppercase tracking-wide text-ink mb-2">
@@ -98,7 +104,8 @@ export default function DashboardTab({ datasetId }: Props) {
           <Sparkles size={13} />
           Generate Dashboard
         </button>
-      </div>
+        </div>
+      </>
     )
   }
 
@@ -123,6 +130,7 @@ export default function DashboardTab({ datasetId }: Props) {
 
   return (
     <div className="space-y-8">
+      {showModal && <GuestLimitModal onClose={closeModal} />}
 
       {/* Header */}
       <div className="flex items-center justify-between">
