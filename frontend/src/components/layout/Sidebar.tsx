@@ -49,23 +49,24 @@ export default function Sidebar({ onNavigate }: Props) {
       </nav>
 
       <div className="border-t border-border">
-        <div
-          className="flex items-center justify-between px-5 py-3 opacity-40 cursor-not-allowed select-none"
-          title="Coming in Phase 7"
+        <NavLink
+          to="/settings"
+          onClick={onNavigate}
+          className={({ isActive }) =>
+            `flex items-center gap-3 px-5 py-3 transition-colors ` +
+            (isActive
+              ? 'bg-navy text-linen border-r-2 border-blue'
+              : 'text-ink-faint hover:text-ink hover:bg-linen-dark')
+          }
         >
-          <div className="flex items-center gap-3 text-ink-faint">
-            <Settings size={14} />
-            <div>
-              <p className="label leading-none">Settings</p>
-              <p className="text-[10px] text-ink-faint/70 mt-0.5 normal-case tracking-normal font-normal">
-                Phase 7
-              </p>
-            </div>
+          <Settings size={14} className="flex-shrink-0" />
+          <div className="min-w-0">
+            <p className="label leading-none">Settings</p>
+            <p className="text-[10px] text-ink-faint/70 mt-0.5 normal-case tracking-normal font-normal">
+              Account & info
+            </p>
           </div>
-          <span className="text-[9px] font-bold uppercase tracking-widest text-ink-faint border border-ink-faint/30 px-1.5 py-0.5 leading-none">
-            Soon
-          </span>
-        </div>
+        </NavLink>
       </div>
     </aside>
   )

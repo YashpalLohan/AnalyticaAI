@@ -13,6 +13,7 @@ import DashboardPage from './app/dashboard/DashboardPage'
 import DatasetsPage from './app/datasets/DatasetsPage'
 import DatasetWorkspacePage from './app/datasets/DatasetWorkspacePage'
 import DatasetPickerPage from './app/DatasetPickerPage'
+import SettingsPage from './app/settings/SettingsPage'
 
 export default function App() {
   return (
@@ -78,7 +79,7 @@ export default function App() {
             />
           } />
 
-          <Route path="/settings" element={<ComingSoon label="Settings" phase={7} />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
