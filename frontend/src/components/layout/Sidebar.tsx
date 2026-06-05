@@ -16,15 +16,20 @@ const navItems = [
   { to: '/reports',   icon: FileText,         label: 'Reports',   sub: 'Insights & export' },
 ]
 
-export default function Sidebar() {
+interface Props {
+  onNavigate?: () => void
+}
+
+export default function Sidebar({ onNavigate }: Props) {
   return (
-    <aside className="w-[220px] bg-linen border-r border-border flex flex-col min-h-full">
+    <aside className="w-[220px] bg-linen border-r border-border flex flex-col h-full">
       <nav className="flex-1 pt-4">
         {navItems.map(item => (
           <NavLink
             key={item.to}
             to={item.to}
             end={item.to === '/dashboard'}
+            onClick={onNavigate}
             className={({ isActive }) =>
               `flex items-center gap-3 px-5 py-3 transition-colors ` +
               (isActive

@@ -68,4 +68,17 @@ if settings.STORAGE_PROVIDER == "local":
 
 @app.get("/health")
 async def health_check():
-    return {"status": "healthy", "version": "1.0.0", "env": settings.APP_ENV}
+    from sqlalchemy import text
+    from app.core.database import AsyncSessionLocal
+    db_status = "healthy"
+    try:
+        async with AsyncSessionLocal() as session:
+            await session.execute(text("SELECT 1"))
+    except Exception:
+        db_status = "unreachable"
+    return {
+        "status": "healthy" if db_status == "healthy" else "degraded",
+        "version": "1.0.0",
+        "env": settings.APP_ENV,
+        "database": db_status,
+    }

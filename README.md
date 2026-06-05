@@ -15,9 +15,9 @@ AnalyticaAI is a full-stack AI-powered analytics platform that lets users upload
 | 2 | Data Profiling — Health score, column stats, cleaning | ✅ Complete |
 | 3 | EDA & Visualizations — Auto charts, correlation, stats | ✅ Complete |
 | 4 | AI Chat — Natural language queries on datasets | ✅ Complete |
-| 5 | Dashboard Generation — One-click BI dashboard | 🔜 Planned |
-| 6 | Insights & Reports — AI insights + PDF/DOCX export | 🔜 Planned |
-| 7 | Polish & Deploy — Production build, live URL | 🔜 Planned |
+| 5 | Dashboard Generation — One-click BI dashboard | ✅ Complete |
+| 6 | Insights & Reports — AI insights + PDF/DOCX export | ✅ Complete |
+| 7 | Polish & Deploy — Mobile responsive, error boundaries, deploy config | ✅ Complete |
 
 ---
 
@@ -199,7 +199,48 @@ Key variables:
 
 ---
 
-## API
+## Deployment
+
+### Frontend → Vercel
+
+1. Push to GitHub
+2. Import repo in [vercel.com](https://vercel.com)
+3. Set environment variable: `VITE_API_URL=https://your-backend.onrender.com/api/v1`
+4. Deploy — SPA routing is handled via `frontend/vercel.json`
+
+### Backend → Render
+
+1. Create a new **Web Service** pointing to the repo
+2. Set **Root Directory** to `backend`
+3. Set **Build Command**: `pip install -r requirements.txt`
+4. Set **Start Command**: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+5. Add environment variables (copy from `.env.example`):
+   - `DATABASE_URL` — Neon or Supabase Postgres connection string
+   - `GROQ_API_KEY`
+   - `JWT_SECRET`
+   - `STORAGE_PROVIDER=supabase`
+   - `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_STORAGE_BUCKET`
+6. After first deploy, run migrations via Render Shell:
+   ```
+   alembic upgrade head
+   ```
+
+### Database → Neon (free tier)
+
+1. Create project at [neon.tech](https://neon.tech)
+2. Copy the connection string (use the `asyncpg` format):
+   ```
+   postgresql+asyncpg://user:pass@host/dbname?sslmode=require
+   ```
+3. Set as `DATABASE_URL` in Render
+
+### Storage → Supabase
+
+1. Create project at [supabase.com](https://supabase.com)
+2. Create a storage bucket named `analytica-ai` (set to public)
+3. Set `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_STORAGE_BUCKET=analytica-ai`
+
+---
 
 Interactive Swagger docs at `http://localhost:8000/docs` when running locally.
 
