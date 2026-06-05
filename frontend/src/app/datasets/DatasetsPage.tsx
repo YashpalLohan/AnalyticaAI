@@ -7,7 +7,7 @@ import datasetService, { Dataset } from '../../services/dataset.service'
 import UploadZone from '../../features/datasets/UploadZone'
 import DatasetList from '../../features/datasets/DatasetList'
 import { useAuthStore } from '../../store/auth.store'
-import { isGuestEmail } from '../../lib/guestUsage'
+import { isGuestEmail, isGuestUploadLimitReached, getGuestUploadCount, GUEST_DATASET_LIMIT } from '../../lib/guestUsage'
 
 const GUEST_DATASET_LIMIT = 3
 
@@ -17,6 +17,9 @@ export default function DatasetsPage() {
   const navigate = useNavigate()
   const { user } = useAuthStore()
   const isGuest = isGuestEmail(user?.email)
+  // Use lifetime upload count (not current dataset count) — deletion-proof
+  const guestLimitReached = isGuest && isGuestUploadLimitReached()
+  const guestUploadCount  = isGuest ? getGuestUploadCount() : 0
 
   const { data, isLoading } = useQuery({
     queryKey: ['datasets'],
@@ -139,7 +142,8 @@ export default function DatasetsPage() {
       {/* ── Count ── */}
       {datasets.length > 0 && (
         <p className="label mt-4 text-right">
-          {datasets.length}{isGuest ? `/${GUEST_DATASET_LIMIT}` : ''} dataset{datasets.length !== 1 ? 's' : ''}
+          {datasets.length} dataset{datasets.length !== 1 ? 's' : ''}
+          {isGuest && ` · ${guestUploadCount}/${GUEST_DATASET_LIMIT} uploads used`}
         </p>
       )}
 

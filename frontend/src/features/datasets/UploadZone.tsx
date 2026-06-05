@@ -2,6 +2,9 @@ import { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { Upload, FileText, CheckCircle, AlertCircle } from 'lucide-react'
 import datasetService, { Dataset } from '../../services/dataset.service'
+import { isGuestEmail, isGuestUploadLimitReached, recordGuestUpload } from '../../lib/guestUsage'
+import { useAuthStore } from '../../store/auth.store'
+import { Link } from 'react-router-dom'
 
 interface Props {
   onUploaded: (dataset: Dataset) => void
@@ -18,6 +21,26 @@ export default function UploadZone({ onUploaded }: Props) {
   const [progress, setProgress] = useState(0)
   const [error, setError] = useState('')
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const { user } = useAuthStore()
+  const isGuest = isGuestEmail(user?.email)
+
+  // Block upload before even trying if the guest has hit their lifetime upload limit
+  if (isGuest && isGuestUploadLimitReached()) {
+    return (
+      <div className="border border-warning/40 bg-warning/5 p-8 text-center">
+        <p className="font-bold uppercase tracking-wide text-ink text-sm mb-1">
+          Guest upload limit reached
+        </p>
+        <p className="text-xs text-ink-faint mb-5">
+          You've used all 3 free dataset uploads. Create a free account to upload unlimited datasets.
+        </p>
+        <div className="flex items-center justify-center gap-3">
+          <Link to="/register" className="btn-primary text-xs py-2 px-5">Create Account</Link>
+          <Link to="/login"    className="btn-secondary text-xs py-2 px-5">Sign In</Link>
+        </div>
+      </div>
+    )
+  }
 
   const doUpload = async (file: File) => {
     setState('uploading')
@@ -25,6 +48,7 @@ export default function UploadZone({ onUploaded }: Props) {
     setError('')
     try {
       const dataset = await datasetService.upload(file, pct => setProgress(pct))
+      if (isGuest) recordGuestUpload(dataset.id)
       setState('success')
       onUploaded(dataset)
     } catch (err: any) {
