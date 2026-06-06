@@ -2,6 +2,8 @@
 
 > Talk to Your Data. Get Insights in Seconds.
 
+**Live Demo:** [https://analytica-ai-eta.vercel.app](https://analytica-ai-eta.vercel.app)
+
 AnalyticaAI is a full-stack, Agentic AI-powered analytics platform that enables users to upload structured datasets and interact with them using natural language. The platform removes the need for SQL queries, manual data cleaning, dashboard configuration, and statistical analysis expertise. Users can simply upload a dataset and ask questions, and the system automatically performs data profiling, cleaning, exploratory data analysis, dashboard creation, insight generation, forecasting, machine learning, and report generation.
 
 ---
@@ -85,38 +87,38 @@ All agents operate securely using a Tool Registry, ensuring they never directly 
 
 ```
 AnalyticaAI/
-Γö£ΓöÇΓöÇ backend/
-Γöé   Γö£ΓöÇΓöÇ app/
-Γöé   Γöé   Γö£ΓöÇΓöÇ agents/            # LangChain/LangGraph specialized agents
-Γöé   Γöé   Γö£ΓöÇΓöÇ api/v1/endpoints/  # Route handlers (auth, datasets, chat, eda)
-Γöé   Γöé   Γö£ΓöÇΓöÇ core/              # Config, DB, LLM factory, security, storage
-Γöé   Γöé   Γö£ΓöÇΓöÇ models/            # SQLAlchemy ORM models
-Γöé   Γöé   Γö£ΓöÇΓöÇ schemas/           # Pydantic request/response schemas
-Γöé   Γöé   Γö£ΓöÇΓöÇ services/          # Business logic
-Γöé   Γöé   Γö£ΓöÇΓöÇ tasks/             # Celery background tasks
-Γöé   Γöé   ΓööΓöÇΓöÇ main.py            # FastAPI app entry point
-Γöé   Γö£ΓöÇΓöÇ alembic/               # Database migrations
-Γöé   Γö£ΓöÇΓöÇ tests/                 # Pytest suite
-Γöé   Γö£ΓöÇΓöÇ requirements.txt
-Γöé   ΓööΓöÇΓöÇ Dockerfile
-Γöé
-Γö£ΓöÇΓöÇ frontend/
-Γöé   Γö£ΓöÇΓöÇ src/
-Γöé   Γöé   Γö£ΓöÇΓöÇ app/               # Route-level pages (dashboard, datasets, auth)
-Γöé   Γöé   Γö£ΓöÇΓöÇ components/        # Shared UI (layout, navbar, sidebar)
-Γöé   Γöé   Γö£ΓöÇΓöÇ features/          # Feature modules (chat, eda, datasets)
-Γöé   Γöé   Γö£ΓöÇΓöÇ services/          # Axios API service functions
-Γöé   Γöé   Γö£ΓöÇΓöÇ hooks/             # Custom React hooks
-Γöé   Γöé   Γö£ΓöÇΓöÇ store/             # Zustand state stores
-Γöé   Γöé   ΓööΓöÇΓöÇ lib/api-client.ts  # Axios instance with auth interceptors
-Γöé   Γö£ΓöÇΓöÇ package.json
-Γöé   ΓööΓöÇΓöÇ Dockerfile
-Γöé
-Γö£ΓöÇΓöÇ sample-datasets/           # Test CSVs for development
-Γö£ΓöÇΓöÇ .github/workflows/         # CI/CD pipelines
-Γö£ΓöÇΓöÇ .env.example               # Environment variables template
-Γö£ΓöÇΓöÇ docker-compose.yml         # Local infrastructure
-ΓööΓöÇΓöÇ README.md
+├── backend/
+│   ├── app/
+│   │   ├── agents/            # LangChain/LangGraph specialized agents
+│   │   ├── api/v1/endpoints/  # Route handlers (auth, datasets, chat, eda)
+│   │   ├── core/              # Config, DB, LLM factory, security, storage
+│   │   ├── models/            # SQLAlchemy ORM models
+│   │   ├── schemas/           # Pydantic request/response schemas
+│   │   ├── services/          # Business logic
+│   │   ├── tasks/             # Celery background tasks
+│   │   └── main.py            # FastAPI app entry point
+│   ├── alembic/               # Database migrations
+│   ├── tests/                 # Pytest suite
+│   ├── requirements.txt
+│   └── Dockerfile
+│
+├── frontend/
+│   ├── src/
+│   │   ├── app/               # Route-level pages (dashboard, datasets, auth)
+│   │   ├── components/        # Shared UI (layout, navbar, sidebar)
+│   │   ├── features/          # Feature modules (chat, eda, datasets)
+│   │   ├── services/          # Axios API service functions
+│   │   ├── hooks/             # Custom React hooks
+│   │   ├── store/             # Zustand state stores
+│   │   └── lib/api-client.ts  # Axios instance with auth interceptors
+│   ├── package.json
+│   └── Dockerfile
+│
+├── sample-datasets/           # Test CSVs for development
+├── .github/workflows/         # CI/CD pipelines
+├── .env.example               # Environment variables template
+├── docker-compose.yml         # Local infrastructure
+└── README.md
 ```
 
 ---
@@ -243,8 +245,6 @@ Key endpoints include:
 - `GET  /api/v1/datasets/{id}/eda` : Get EDA charts and statistics
 - `POST /api/v1/chat/query` : Ask a natural language question
 - `GET  /api/v1/chat/sessions/{id}` : List chat sessions for a dataset
-
-Full interactive docs are available at `http://localhost:8000/docs` when running locally.
 
 ---
 
