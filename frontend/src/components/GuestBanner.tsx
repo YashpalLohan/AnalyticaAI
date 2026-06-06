@@ -1,60 +1,19 @@
-import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { UserPlus } from 'lucide-react'
 import { useAuthStore } from '../store/auth.store'
-import { GUEST_LIMIT, isGuestEmail } from '../lib/guestUsage'
-
-const STORAGE_KEY = 'guest_usage_count'
+import { isGuestEmail } from '../lib/guestUsage'
 
 export default function GuestBanner() {
   const { user } = useAuthStore()
   const isGuest = isGuestEmail(user?.email)
 
-  // Read count from localStorage and stay in sync via storage events
-  const [used, setUsed] = useState<number>(() =>
-    parseInt(localStorage.getItem(STORAGE_KEY) ?? '0', 10)
-  )
-
-  useEffect(() => {
-    if (!isGuest) return
-
-    // Re-read on every render cycle tick (covers same-tab updates)
-    const interval = setInterval(() => {
-      const latest = parseInt(localStorage.getItem(STORAGE_KEY) ?? '0', 10)
-      setUsed(latest)
-    }, 500)
-
-    return () => clearInterval(interval)
-  }, [isGuest])
-
   if (!isGuest) return null
-
-  const left = Math.max(0, GUEST_LIMIT - used)
 
   return (
     <div className="bg-navy border-b border-border-dark px-6 py-2 flex items-center justify-between gap-4">
-      <div className="flex items-center gap-4">
-        <p className="text-xs text-linen/70">
-          Guest mode — data is session-only and won't sync across devices.
-        </p>
-        {/* Usage pips */}
-        <div className="hidden sm:flex items-center gap-1.5">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-linen/40">
-            AI actions
-          </span>
-          {Array.from({ length: GUEST_LIMIT }).map((_, i) => (
-            <div
-              key={i}
-              className={`w-2 h-2 rounded-full transition-colors ${
-                i < used ? 'bg-error' : 'bg-blue'
-              }`}
-            />
-          ))}
-          <span className="text-[10px] text-linen/50 ml-1">
-            {left} left
-          </span>
-        </div>
-      </div>
+      <p className="text-xs text-linen/70">
+        Guest mode — data is session-only and won't sync across devices.
+      </p>
 
       <div className="flex items-center gap-3 flex-shrink-0">
         <Link
