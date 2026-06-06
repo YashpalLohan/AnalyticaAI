@@ -90,5 +90,5 @@ docker-compose.override.yml
 credentials.json
 service-account.json
 
-# Internal planning and AI context — not for public repos
+# For Internal planning 
 docs/
