@@ -7,7 +7,7 @@ interface Props {
 }
 
 export default function ProtectedRoute({ children }: Props) {
-  const { isAuthenticated, setAuth } = useAuthStore()
+  const { setAuth } = useAuthStore()
   const [ready, setReady] = useState(false)
 
   useEffect(() => {

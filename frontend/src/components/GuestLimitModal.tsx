@@ -6,7 +6,7 @@ interface Props {
   onClose?: () => void
 }
 
-export default function GuestLimitModal({ onClose }: Props) {
+export default function GuestLimitModal({ onClose: _onClose }: Props) {
   return (
     // Backdrop
     <div className="fixed inset-0 bg-ink/60 z-50 flex items-center justify-center p-6">

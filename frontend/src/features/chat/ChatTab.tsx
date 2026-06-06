@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { MessageSquare, Sparkles, Loader2 } from 'lucide-react'
+import { MessageSquare, Sparkles } from 'lucide-react'
 import toast from 'react-hot-toast'
 import chatService, { ChatMessage } from '../../services/chat.service'
 import MessageBubble from './MessageBubble'
@@ -39,7 +39,7 @@ export default function ChatTab({ datasetId }: Props) {
   const [loading, setLoading] = useState(false)
   const [followUps, setFollowUps] = useState<string[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const { checkLimit, showModal, closeModal, usageLeft } = useGuestLimit()
+  const { checkLimit, showModal, closeModal } = useGuestLimit()
 
   // Auto-scroll to bottom when messages change
   useEffect(() => {
