@@ -89,3 +89,6 @@ docker-compose.override.yml
 *.cert
 credentials.json
 service-account.json
+
+# Internal planning and AI context — not for public repos
+docs/
