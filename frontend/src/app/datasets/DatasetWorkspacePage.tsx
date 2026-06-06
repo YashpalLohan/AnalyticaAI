@@ -261,7 +261,7 @@ export default function DatasetWorkspacePage() {
                 </button>
               </div>
             )}
-            {isProfileReady && <OverviewTab profile={profile} />}
+            {isProfileReady && <OverviewTab key={profile.health_score} profile={profile} />}
           </>
         )}
 
@@ -284,7 +284,7 @@ export default function DatasetWorkspacePage() {
               </div>
             )}
             {isProfileReady && (
-              <CleaningTab profile={profile} onCleaned={handleCleaned} />
+              <CleaningTab key={profile.id + (profile.health_score ?? 0)} profile={profile} onCleaned={handleCleaned} />
             )}
           </>
         )}

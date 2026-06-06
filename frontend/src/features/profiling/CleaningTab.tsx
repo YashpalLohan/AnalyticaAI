@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AlertTriangle, CheckCircle2, Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import type { DatasetProfile, CleaningSuggestion, CleaningFix } from '../../services/profile.service'
@@ -147,6 +147,11 @@ function SuggestionCard({ suggestion, selected, onToggle }: SuggestionCardProps)
 export default function CleaningTab({ profile, onCleaned }: Props) {
   const [selected, setSelected] = useState<Set<string>>(() => new Set())
   const [applying, setApplying] = useState(false)
+
+  // Reset selections whenever the profile updates (e.g. after apply)
+  useEffect(() => {
+    setSelected(new Set())
+  }, [profile.id, profile.health_score, profile.cleaning_suggestions.length])
 
   const suggestions = profile.cleaning_suggestions
   const noIssues = suggestions.length === 0
