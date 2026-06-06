@@ -18,14 +18,17 @@ apiClient.interceptors.request.use(
   (error) => Promise.reject(error)
 )
 
-// Handle 401 — redirect to login
+// Handle 401/403 — clear token and redirect to login to get a fresh guest session
 apiClient.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 || error.response?.status === 403) {
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
-      window.location.href = '/login'
+      // Clear Zustand auth state
+      const { useAuthStore } = await import('../store/auth.store')
+      useAuthStore.getState().clearAuth()
+      window.location.href = '/dashboard'  // re-triggers guest creation
     }
     return Promise.reject(error)
   }

@@ -7,32 +7,48 @@ interface Props {
 }
 
 export default function ProtectedRoute({ children }: Props) {
-  const { setAuth } = useAuthStore()
+  const { setAuth, clearAuth } = useAuthStore()
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    // Wait one tick for Zustand to rehydrate from localStorage
     const init = async () => {
-      const hydrated = useAuthStore.getState().isAuthenticated
-      if (!hydrated) {
-        // Not logged in — auto-create a guest session silently
+      const state = useAuthStore.getState()
+
+      if (state.isAuthenticated && state.user) {
+        // Verify the existing token still works against the backend
+        try {
+          await authService.getMe()
+          // Token is valid — proceed
+        } catch {
+          // Token is stale (user doesn't exist in this DB environment)
+          // Clear everything and create a fresh guest session
+          clearAuth()
+          try {
+            const tokens = await authService.guest()
+            localStorage.setItem('access_token', tokens.access_token)
+            const me = await authService.getMe()
+            setAuth(me, tokens.access_token, tokens.refresh_token, true)
+          } catch {
+            // Backend unreachable — render anyway
+          }
+        }
+      } else {
+        // Not authenticated — create guest session
         try {
           const tokens = await authService.guest()
           localStorage.setItem('access_token', tokens.access_token)
           const me = await authService.getMe()
           setAuth(me, tokens.access_token, tokens.refresh_token, true)
         } catch {
-          // If guest creation fails (e.g. backend offline), still render the app
-          // The individual API calls will fail gracefully with toasts
+          // Backend unreachable — render anyway
         }
       }
+
       setReady(true)
     }
     init()
   }, [])
 
-  // Show nothing while setting up guest session (usually < 500ms)
   if (!ready) return null
-
   return <>{children}</>
 }
