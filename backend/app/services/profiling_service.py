@@ -685,61 +685,51 @@ async def apply_cleaning(
     dataset: Dataset = await get_dataset(dataset_id, user_id, db)
     storage = get_storage()
     content = await storage.download(dataset.storage_path)
-    df = _load_df(content, dataset.file_extension)
 
-    for fix in fixes:
-        action = fix.get("fix")
-        col    = fix.get("affected_column")
+    # Run all CPU-heavy pandas work in a thread to avoid blocking the event loop
+    import asyncio
+    loop = asyncio.get_event_loop()
 
-        # ── Uniqueness ────────────────────────────────────────────────────
-        if action == "drop_duplicates":
-            df = df.drop_duplicates()
+    def _apply_fixes_sync(raw_content: bytes) -> tuple[bytes, int, int]:
+        df = _load_df(raw_content, dataset.file_extension)
 
-        # ── Completeness ──────────────────────────────────────────────────
-        elif action == "fill_median" and col and col in df.columns:
-            # Handle mixed columns (e.g. 'abc' and numbers) — coerce first
-            if df[col].dtype == object:
-                df[col] = pd.to_numeric(df[col], errors='coerce')
-            if pd.api.types.is_numeric_dtype(df[col]):
-                df[col] = df[col].fillna(df[col].median())
+        for fix in fixes:
+            action = fix.get("fix")
+            col    = fix.get("affected_column")
 
-        elif action == "fill_mode" and col and col in df.columns:
-            mode_series = df[col].mode()
-            if not mode_series.empty:
-                df[col] = df[col].fillna(mode_series[0])
+            if action == "drop_duplicates":
+                df = df.drop_duplicates()
+            elif action == "fill_median" and col and col in df.columns:
+                if df[col].dtype == object:
+                    df[col] = pd.to_numeric(df[col], errors='coerce')
+                if pd.api.types.is_numeric_dtype(df[col]):
+                    df[col] = df[col].fillna(df[col].median())
+            elif action == "fill_mode" and col and col in df.columns:
+                mode_series = df[col].mode()
+                if not mode_series.empty:
+                    df[col] = df[col].fillna(mode_series[0])
+            elif action == "drop_column" and col and col in df.columns:
+                df = df.drop(columns=[col])
+            elif action == "abs_value" and col and col in df.columns:
+                df[col] = pd.to_numeric(df[col], errors='coerce').abs()
+            elif action == "standardize_dates" and col and col in df.columns:
+                parsed = pd.to_datetime(df[col], format='mixed', dayfirst=False, errors='coerce')
+                df[col] = parsed.dt.strftime('%Y-%m-%d').where(parsed.notna(), other=None)
+            elif action == "standardize_categories" and col and col in df.columns:
+                if df[col].dtype == object:
+                    df[col] = df[col].str.strip().str.title()
 
-        elif action == "drop_column" and col and col in df.columns:
-            df = df.drop(columns=[col])
+        buf = io.BytesIO()
+        df.to_csv(buf, index=False)
+        return buf.getvalue(), int(len(df)), int(len(df.columns))
 
-        # ── Validity: absolute value for negative financials ─────────────
-        elif action == "abs_value" and col and col in df.columns:
-            # Coerce to numeric first (handles mixed string/number columns)
-            df[col] = pd.to_numeric(df[col], errors='coerce').abs()
-
-        # ── Validity: standardize dates ───────────────────────────────────
-        elif action == "standardize_dates" and col and col in df.columns:
-            # Use dayfirst=False to prefer YYYY-MM-DD and MM/DD/YYYY over DD-MM-YYYY
-            # format=mixed handles multiple formats in the same column
-            parsed = pd.to_datetime(df[col], format='mixed', dayfirst=False, errors='coerce')
-            df[col] = parsed.dt.strftime('%Y-%m-%d').where(parsed.notna(), other=None)
-
-        # ── Consistency: standardize categories ───────────────────────────
-        elif action == "standardize_categories" and col and col in df.columns:
-            if df[col].dtype == object:
-                # Strip whitespace then apply title-case
-                # Title-case preserves readability: "electronics" → "Electronics"
-                df[col] = df[col].str.strip().str.title()
-
-    # Overwrite stored file as CSV
-    buf = io.BytesIO()
-    df.to_csv(buf, index=False)
-    cleaned_bytes = buf.getvalue()
+    cleaned_bytes, new_rows, new_cols = await loop.run_in_executor(None, _apply_fixes_sync, content)
 
     await storage.upload(dataset.storage_path, cleaned_bytes, "text/csv")
 
     # Update dataset metadata
-    dataset.total_rows    = int(len(df))
-    dataset.total_columns = int(len(df.columns))
+    dataset.total_rows    = new_rows
+    dataset.total_columns = new_cols
     dataset.file_size     = int(len(cleaned_bytes))
     if dataset.file_extension not in ("csv", "txt"):
         dataset.file_extension = "csv"
