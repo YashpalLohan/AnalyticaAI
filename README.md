@@ -153,6 +153,11 @@ alembic upgrade head
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
+> **Windows (PowerShell):** If `uvicorn` isn't found after activating the venv, prefix the command with the venv path:
+> ```powershell
+> $env:PATH = "c:\path\to\.venv\Scripts;$env:PATH"; uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+> ```
+
 ### 4. Frontend setup
 
 ```bash
