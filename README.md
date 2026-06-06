@@ -1,281 +1,260 @@
-# AnalyticaAI
+# AnalyticaAI - AI Data Analyst Agent
 
 > Talk to Your Data. Get Insights in Seconds.
 
-AnalyticaAI is a full-stack, agentic AI analytics platform. Upload any structured dataset — CSV, XLSX, or JSON — and interact with it through natural language. The platform automatically profiles, cleans, analyzes, visualizes, and generates business insights from your data without requiring SQL, Python, or any technical expertise.
-
-![Stack](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
-![Stack](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
-![Stack](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
-![Stack](https://img.shields.io/badge/LangGraph-000000?style=flat&logo=langchain&logoColor=white)
-![Stack](https://img.shields.io/badge/PostgreSQL-4169E1?style=flat&logo=postgresql&logoColor=white)
-![Stack](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white)
+AnalyticaAI is a full-stack, Agentic AI-powered analytics platform that enables users to upload structured datasets and interact with them using natural language. The platform removes the need for SQL queries, manual data cleaning, dashboard configuration, and statistical analysis expertise. Users can simply upload a dataset and ask questions, and the system automatically performs data profiling, cleaning, exploratory data analysis, dashboard creation, insight generation, forecasting, machine learning, and report generation.
 
 ---
 
-## What It Does
+## 1. Executive Summary
 
-| Step | Action |
-|---|---|
-| 1 | Upload a CSV, XLSX, or JSON dataset |
-| 2 | Receive an automated data profile — health score, missing values, outliers |
-| 3 | Apply one-click AI-suggested data cleaning |
-| 4 | Explore auto-generated charts, correlations, and statistics |
-| 5 | Ask questions in plain English via the AI chat interface |
-| 6 | Get a generated dashboard with KPI cards, charts, and tables |
-| 7 | Export insights and reports as PDF or DOCX |
+Modern analytics tools require significant technical knowledge. Users often struggle with data preparation (missing values, duplicates), querying data (SQL knowledge), visualization (chart selection), machine learning (model training), and reporting.
+
+AnalyticaAI solves this by creating the simplest way for anyone to understand data through conversation. It transforms complex data analysis into a natural chat experience where users receive actionable insights without technical expertise. The long-term vision is to create an autonomous business intelligence assistant capable of understanding datasets, monitoring trends, detecting risks, generating recommendations, and training predictive models.
 
 ---
 
-## Tech Stack
+## 2. Target Users and Use Cases
 
-**Frontend**
-- React 18, TypeScript, Vite
-- Tailwind CSS, Shadcn UI
-- Recharts, Zustand, React Query
-
-**Backend**
-- FastAPI (Python 3.12)
-- SQLAlchemy, Alembic
-- Celery + Redis (async task queue)
-
-**AI Layer**
-- LangGraph (multi-agent orchestration)
-- LangChain
-- Groq — Llama 3.3 70B
-
-**Database & Storage**
-- PostgreSQL 15
-- ChromaDB (vector memory / RAG)
-- Supabase Storage
-
-**Infrastructure**
-- Vercel (frontend)
-- Render (backend)
-- Docker Compose (local development)
+- **Business Analysts**: Faster reporting, automated dashboards, and rapid trend discovery without repetitive Excel work.
+- **Startup Founders**: KPI tracking, revenue forecasting, and customer insights without needing a dedicated analyst.
+- **Marketing Teams**: Campaign performance tracking, customer segmentation, and ROI analysis.
+- **Product Managers**: Product usage insights, retention analysis, and growth monitoring.
+- **Students**: Academic dataset research and project analysis support.
 
 ---
 
-## Agentic Architecture
+## 3. Core Features
 
-AnalyticaAI uses a LangGraph multi-agent pipeline. An Orchestrator Agent routes each user request to the appropriate specialist:
+### Data Management
+- **Dataset Upload**: Drag and drop CSV, XLSX, or JSON files up to 100MB.
+- **Dataset Workspace**: Secure storage, version management, and dataset history tracking.
 
-```
-Dataset Upload
-     │
-     ▼
-Dataset Agent       ← schema analysis, column classification
-     │
-     ▼
-Cleaning Agent      ← missing values, duplicates, outliers
-     │
-     ▼
-EDA Agent           ← statistics, correlations, chart recommendations
-     │
-     ▼
-Insight Agent       ← trends, risks, opportunities
-     │
-     ▼
-Dashboard Agent     ← KPI cards, chart layout, widget selection
-     │
-     ▼
-Report Agent        ← PDF / DOCX report generation
-```
+### Automated Analysis
+- **Data Profiling**: Automated row/column counts, missing values detection, duplicate identification, outlier spotting, and a generated dataset health score (0-100).
+- **Data Cleaning**: AI-suggested fixes for missing values, duplicates, and outliers applied in one click.
+- **Exploratory Data Analysis (EDA)**: Auto-generated histograms, bar charts, correlation heatmaps, and summary statistics.
 
-A **Memory Agent** maintains long-term context across sessions using ChromaDB RAG, enabling follow-up questions that reference prior analysis.
+### Agentic AI Interface
+- **Natural Language Querying**: Ask questions in plain English using Groq's Llama 3.3 70B.
+- **Insight Generation**: Automated business trends, risk detection, and recommendations.
+- **Follow-up Suggestions**: AI-driven prompts to guide deeper analysis.
+
+### Advanced Capabilities
+- **Forecasting (Roadmap)**: Time-series predictions with confidence intervals using models like Prophet and XGBoost.
+- **AutoML (Roadmap)**: Automated model selection, training, and evaluation for classification and regression tasks.
+- **Reporting**: One-click generation of BI dashboards and exportable executive reports (PDF/DOCX).
 
 ---
 
-## Project Structure
+## 4. System Architecture
+
+The platform uses a modern, scalable six-layer architecture:
+
+1. **Presentation Layer**: React.js, Vite, TypeScript, Tailwind CSS, Shadcn UI. Handles UI, dashboard rendering, and chat experience.
+2. **API Gateway Layer**: FastAPI (Python 3.12). Acts as the entry point for all requests, handling authentication, dataset upload, and agent execution.
+3. **Business Logic Layer**: Core services for user management, dataset versioning, chat storage, and report generation.
+4. **AI Layer**: LangGraph, LangChain, Groq (Llama 3.3 70B). Powers intelligent analytics, dataset understanding, and agent coordination.
+5. **Data Layer**: PostgreSQL 15 (Relational Data), ChromaDB (Vector Embeddings), and Local/Supabase Storage (Dataset files).
+6. **Infrastructure Layer**: Redis + Celery for asynchronous background jobs.
+
+---
+
+## 5. Agentic Architecture (LangGraph)
+
+Instead of a single LLM handling all tasks, AnalyticaAI uses a multi-agent system coordinated by an **Orchestrator Agent**. Each agent performs one responsibility exceptionally well and communicates through a shared state model.
+
+### The Agents:
+- **Dataset Understanding Agent**: Analyzes schema, classifies columns, and extracts business context.
+- **Cleaning Agent**: Detects missing values, duplicates, outliers, and type corrections.
+- **EDA Agent**: Generates statistical analysis, correlations, and visualization recommendations.
+- **Insight Agent**: Converts data into business insights, identifying trends, risks, and opportunities.
+- **Dashboard Agent**: Dynamically selects KPIs, charts, and layouts for auto-generated dashboards.
+- **Report Agent**: Compiles findings into comprehensive executive and technical reports.
+- **ML / Forecast Agents**: Manages AutoML pipelines and time-series future prediction generation.
+- **Memory Agent (RAG)**: Maintains long-term memory of previous queries, insights, and dataset context using ChromaDB.
+
+### Agent Communication Flow:
+Dataset Upload -> Dataset Agent -> Cleaning Agent -> EDA Agent -> Insight Agent -> Dashboard Agent -> Report Agent.
+
+All agents operate securely using a Tool Registry, ensuring they never directly manipulate data without proper tool abstraction (e.g., `generate_chart`, `detect_outliers`).
+
+---
+
+## 6. Project Structure
 
 ```
 AnalyticaAI/
-├── backend/
-│   ├── app/
-│   │   ├── agents/            # LangGraph agent definitions
-│   │   ├── api/v1/endpoints/  # Auth, datasets, chat, EDA routes
-│   │   ├── core/              # Config, DB, security, LLM factory
-│   │   ├── models/            # SQLAlchemy ORM models
-│   │   ├── schemas/           # Pydantic request/response schemas
-│   │   ├── services/          # Business logic layer
-│   │   ├── tasks/             # Celery background jobs
-│   │   └── main.py            # FastAPI entry point
-│   ├── alembic/               # Database migrations
-│   ├── tests/                 # Pytest suite
-│   ├── requirements.txt
-│   └── Dockerfile
-│
-├── frontend/
-│   ├── src/
-│   │   ├── app/               # Page-level routes
-│   │   ├── components/        # Shared UI components
-│   │   ├── features/          # Feature modules (chat, EDA, datasets)
-│   │   ├── services/          # Axios API layer
-│   │   ├── hooks/             # Custom React hooks
-│   │   ├── store/             # Zustand state stores
-│   │   └── lib/api-client.ts  # Axios instance with auth interceptors
-│   ├── package.json
-│   └── Dockerfile
-│
-├── sample-datasets/           # Test CSVs for development
-├── .github/workflows/         # CI/CD pipelines
-├── .env.example               # Environment variable template
-├── docker-compose.yml         # Local infrastructure
-└── README.md
+Γö£ΓöÇΓöÇ backend/
+Γöé   Γö£ΓöÇΓöÇ app/
+Γöé   Γöé   Γö£ΓöÇΓöÇ agents/            # LangChain/LangGraph specialized agents
+Γöé   Γöé   Γö£ΓöÇΓöÇ api/v1/endpoints/  # Route handlers (auth, datasets, chat, eda)
+Γöé   Γöé   Γö£ΓöÇΓöÇ core/              # Config, DB, LLM factory, security, storage
+Γöé   Γöé   Γö£ΓöÇΓöÇ models/            # SQLAlchemy ORM models
+Γöé   Γöé   Γö£ΓöÇΓöÇ schemas/           # Pydantic request/response schemas
+Γöé   Γöé   Γö£ΓöÇΓöÇ services/          # Business logic
+Γöé   Γöé   Γö£ΓöÇΓöÇ tasks/             # Celery background tasks
+Γöé   Γöé   ΓööΓöÇΓöÇ main.py            # FastAPI app entry point
+Γöé   Γö£ΓöÇΓöÇ alembic/               # Database migrations
+Γöé   Γö£ΓöÇΓöÇ tests/                 # Pytest suite
+Γöé   Γö£ΓöÇΓöÇ requirements.txt
+Γöé   ΓööΓöÇΓöÇ Dockerfile
+Γöé
+Γö£ΓöÇΓöÇ frontend/
+Γöé   Γö£ΓöÇΓöÇ src/
+Γöé   Γöé   Γö£ΓöÇΓöÇ app/               # Route-level pages (dashboard, datasets, auth)
+Γöé   Γöé   Γö£ΓöÇΓöÇ components/        # Shared UI (layout, navbar, sidebar)
+Γöé   Γöé   Γö£ΓöÇΓöÇ features/          # Feature modules (chat, eda, datasets)
+Γöé   Γöé   Γö£ΓöÇΓöÇ services/          # Axios API service functions
+Γöé   Γöé   Γö£ΓöÇΓöÇ hooks/             # Custom React hooks
+Γöé   Γöé   Γö£ΓöÇΓöÇ store/             # Zustand state stores
+Γöé   Γöé   ΓööΓöÇΓöÇ lib/api-client.ts  # Axios instance with auth interceptors
+Γöé   Γö£ΓöÇΓöÇ package.json
+Γöé   ΓööΓöÇΓöÇ Dockerfile
+Γöé
+Γö£ΓöÇΓöÇ sample-datasets/           # Test CSVs for development
+Γö£ΓöÇΓöÇ .github/workflows/         # CI/CD pipelines
+Γö£ΓöÇΓöÇ .env.example               # Environment variables template
+Γö£ΓöÇΓöÇ docker-compose.yml         # Local infrastructure
+ΓööΓöÇΓöÇ README.md
 ```
 
 ---
 
-## Local Setup
+## 7. Quick Start Setup Guide
 
 ### Prerequisites
-
 - Python 3.12+
 - Node.js 20+
-- Docker Desktop
+- Docker Desktop (for PostgreSQL + Redis)
+- A free Groq API key (from console.groq.com)
 
-### 1. Clone
-
+### Step 1: Clone the Repository
 ```bash
 git clone https://github.com/YashpalLohan/AnalyticaAI.git
 cd AnalyticaAI
 ```
 
-### 2. Start Infrastructure
-
+### Step 2: Start the Database Infrastructure
+Make sure Docker Desktop is running, then start PostgreSQL (port 5432) and Redis (port 6379):
 ```bash
 docker-compose up postgres redis -d
 ```
+Data persists in Docker volumes across restarts.
 
-### 3. Backend
-
+### Step 3: Backend Setup
 ```bash
 cd backend
-
-# Create and activate virtual environment
 python -m venv .venv
-.venv\Scripts\activate        # Windows
-source .venv/bin/activate     # macOS/Linux
+
+# Windows
+.venv\Scripts\activate
+# macOS/Linux
+source .venv/bin/activate
 
 pip install -r requirements.txt
 ```
 
-Copy the environment template and fill in your values:
-
+Copy the example environment file and fill in your values:
 ```bash
 cp ../.env.example .env
 ```
 
-Minimum required values:
-
+Minimum required values in `backend/.env`:
 ```env
 DATABASE_URL=postgresql://analytica:analytica_password@localhost:5432/analytica_ai
-GROQ_API_KEY=your_groq_api_key
-JWT_SECRET=your_32_char_secret
+GROQ_API_KEY=gsk_your_key_here
+JWT_SECRET=your_32_char_secret_here
 ```
 
-Run migrations and start the server:
-
+Run database migrations and start the FastAPI server:
 ```bash
 alembic upgrade head
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### 4. Frontend
-
+### Step 4: Frontend Setup
+Open a new terminal window:
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-### 5. Access
-
-| Service | URL |
-|---|---|
-| Frontend | http://localhost:5173 |
-| Backend API | http://localhost:8000 |
-| Swagger Docs | http://localhost:8000/docs |
+### Step 5: Access the Application
+- **Frontend App**: http://localhost:5173
+- **Backend API**: http://localhost:8000
+- **Interactive API Docs (Swagger)**: http://localhost:8000/docs
 
 ---
 
-## Deployment
+## 8. Deployment Guide
 
-### Backend — Render
+### Database (Neon - Free Tier)
+1. Create a project at neon.tech.
+2. Copy the `asyncpg` connection string.
+3. Set this as the `DATABASE_URL` environment variable.
 
-1. Create a Web Service pointing to this repository.
+### Storage (Supabase)
+1. Create a project at supabase.com.
+2. Create a public storage bucket named `analytica-ai`.
+3. Set `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `SUPABASE_STORAGE_BUCKET=analytica-ai` in your environment variables.
+
+### Backend (Render)
+1. Create a new Web Service pointing to the repository.
 2. Set Root Directory to `backend`.
 3. Build Command: `pip install -r requirements.txt`
 4. Start Command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-5. Add all environment variables from `.env.example`.
-6. After first deploy, run `alembic upgrade head` in the Render Shell.
+5. Add all necessary environment variables.
+6. After the first deploy, run migrations via the Render Shell: `alembic upgrade head`.
 
-### Frontend — Vercel
-
-1. Import the repository in Vercel.
-2. Set Framework Preset to **Vite**.
-3. Add environment variable: `VITE_API_URL=https://your-backend.onrender.com/api/v1`
-4. Deploy. SPA routing is configured via `frontend/vercel.json`.
-
-### Database — Neon (Free Tier)
-
-1. Create a project at [neon.tech](https://neon.tech).
-2. Copy the `asyncpg` connection string.
-3. Set as `DATABASE_URL`.
-
-### Storage — Supabase
-
-1. Create a project at [supabase.com](https://supabase.com).
-2. Create a storage bucket named `analytica-ai`.
-3. Set `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `SUPABASE_STORAGE_BUCKET`.
+### Frontend (Vercel)
+1. Import the repository in vercel.com.
+2. Set the environment variable: `VITE_API_URL=https://your-backend.onrender.com/api/v1`
+3. Deploy. SPA routing is handled via `frontend/vercel.json`.
 
 ---
 
-## Key API Endpoints
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/v1/auth/register` | Register a new user |
-| POST | `/api/v1/auth/login` | Login, receive JWT |
-| POST | `/api/v1/datasets/upload` | Upload CSV/XLSX/JSON |
-| GET | `/api/v1/datasets` | List user datasets |
-| GET | `/api/v1/datasets/{id}/profile` | Get profiling results |
-| GET | `/api/v1/datasets/{id}/eda` | Get EDA charts and statistics |
-| POST | `/api/v1/chat/query` | Natural language query |
-| GET | `/api/v1/chat/sessions/{id}` | Get chat history |
-
-Full interactive docs available at `/docs` when running locally.
-
----
-
-## Build Status
+## 9. Build Status
 
 | Phase | Feature | Status |
 |---|---|---|
-| 0 | Foundation — Auth, routing, layout | Complete |
-| 1 | Dataset Upload — CSV/XLSX/JSON, storage | Complete |
-| 2 | Data Profiling — Health score, column stats, cleaning | Complete |
-| 3 | EDA — Auto charts, correlations, statistics | Complete |
-| 4 | AI Chat — Natural language queries | Complete |
-| 5 | Dashboard Generation — One-click BI dashboard | Complete |
-| 6 | Insights & Reports — AI insights, PDF/DOCX export | Complete |
-| 7 | Polish & Deploy — Responsive, error boundaries, CI/CD | Complete |
-| 8 | Forecasting — Prophet/XGBoost time-series (Roadmap) | Planned |
-| 9 | AutoML — Classification/Regression pipeline (Roadmap) | Planned |
+| 0 | Foundation - Auth, routing, layout | Complete |
+| 1 | Dataset Upload - CSV/XLSX/JSON, storage, listing | Complete |
+| 2 | Data Profiling - Health score, column stats, cleaning | Complete |
+| 3 | EDA & Visualizations - Auto charts, correlation, stats | Complete |
+| 4 | AI Chat - Natural language queries on datasets | Complete |
+| 5 | Dashboard Generation - One-click BI dashboard | Complete |
+| 6 | Insights & Reports - AI insights + PDF/DOCX export | Complete |
+| 7 | Polish & Deploy - Mobile responsive, error boundaries, deploy config | Complete |
 
 ---
 
-## Contributing
+## 10. API Specification Reference
 
-Contributions are welcome. Please read `CONTRIBUTING.md` for branch naming conventions, commit message standards, and pull request guidelines.
+Interactive Swagger docs are available at `http://localhost:8000/docs` when running locally.
+
+Key endpoints include:
+- `POST /api/v1/auth/register` : Register a new user
+- `POST /api/v1/auth/login` : Login, receive JWT tokens
+- `POST /api/v1/datasets/upload` : Upload a CSV/XLSX/JSON file
+- `GET  /api/v1/datasets` : List datasets for current user
+- `GET  /api/v1/datasets/{id}/profile` : Get profiling results
+- `GET  /api/v1/datasets/{id}/eda` : Get EDA charts and statistics
+- `POST /api/v1/chat/query` : Ask a natural language question
+- `GET  /api/v1/chat/sessions/{id}` : List chat sessions for a dataset
+
+Full interactive docs are available at `http://localhost:8000/docs` when running locally.
+
+---
+
+## 11. Contributing
+
+We welcome contributions! Please review `CONTRIBUTING.md` for branch naming conventions, commit message standards, code guidelines, and pull request checklists. 
 
 1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Commit using conventional commits
-4. Open a pull request against the `develop` branch
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes using conventional commits
+4. Push and open a pull request against the `develop` branch
 
 ---
-
-## License
-
-MIT
