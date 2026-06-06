@@ -217,24 +217,9 @@ npm run dev
 2. Set the environment variable: `VITE_API_URL=https://your-backend.onrender.com/api/v1`
 3. Deploy. SPA routing is handled via `frontend/vercel.json`.
 
----
 
-## 9. Build Status
 
-| Phase | Feature | Status |
-|---|---|---|
-| 0 | Foundation - Auth, routing, layout | Complete |
-| 1 | Dataset Upload - CSV/XLSX/JSON, storage, listing | Complete |
-| 2 | Data Profiling - Health score, column stats, cleaning | Complete |
-| 3 | EDA & Visualizations - Auto charts, correlation, stats | Complete |
-| 4 | AI Chat - Natural language queries on datasets | Complete |
-| 5 | Dashboard Generation - One-click BI dashboard | Complete |
-| 6 | Insights & Reports - AI insights + PDF/DOCX export | Complete |
-| 7 | Polish & Deploy - Mobile responsive, error boundaries, deploy config | Complete |
-
----
-
-## 10. API Specification Reference
+## 9. API Specification Reference
 
 Interactive Swagger docs are available at `http://localhost:8000/docs` when running locally.
 
@@ -250,7 +235,7 @@ Key endpoints include:
 
 ---
 
-## 11. Contributing
+## 10. Contributing
 
 We welcome contributions! Please review `CONTRIBUTING.md` for branch naming conventions, commit message standards, code guidelines, and pull request checklists. 
 
