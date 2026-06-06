@@ -33,8 +33,8 @@ export default function LandingPage() {
             ))}
           </div>
           <div className="flex items-center gap-3">
-            <Link to="/dashboard" className="label hover:text-ink transition-colors hidden md:block">
-              Try free
+            <Link to="/login" className="label hover:text-ink transition-colors hidden md:block">
+              Sign in
             </Link>
             <Link to="/register" className="btn-primary text-xs py-2.5 px-5">
               Get started →
@@ -67,15 +67,15 @@ export default function LandingPage() {
                 no SQL, no code, no manual work.
               </p>
             </div>
-            <div className="flex flex-col gap-3">
-              <Link to="/register" className="btn-primary">
-                Start for free →
+            <div className="flex flex-col gap-3 min-w-[220px]">
+              <Link to="/register" className="btn-primary text-center justify-center">
+                Start for Free →
               </Link>
-              <Link to="/dashboard" className="btn-secondary text-center">
+              <Link to="/dashboard" className="btn-secondary text-center justify-center">
                 Try without account
               </Link>
-              <Link to="/login" className="text-center text-xs text-ink-faint hover:text-ink transition-colors py-1">
-                Sign in →
+              <Link to="/login" className="text-center text-xs text-ink-faint hover:text-ink transition-colors py-1 underline underline-offset-2">
+                Already have an account? Sign in
               </Link>
             </div>
           </div>
