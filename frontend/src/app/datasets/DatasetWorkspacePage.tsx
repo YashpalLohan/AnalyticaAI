@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { ArrowLeft, Loader2, RefreshCw, BarChart2, Sparkles, LayoutDashboard, FileText, TrendingUp, MessageSquare } from 'lucide-react'
+import { ArrowLeft, Loader2, RefreshCw, BarChart2, Sparkles, LayoutDashboard, FileText, TrendingUp, MessageSquare, Download } from 'lucide-react'
 import toast from 'react-hot-toast'
 import datasetService, { Dataset } from '../../services/dataset.service'
 import profileService, { DatasetProfile } from '../../services/profile.service'
@@ -186,18 +186,28 @@ export default function DatasetWorkspacePage() {
             </div>
           </div>
 
-          {/* Profile / re-profile button */}
-          <button
-            onClick={handleTriggerProfile}
-            disabled={profiling}
-            className="btn-primary flex items-center gap-2 text-xs py-2.5 px-5 disabled:opacity-60"
-          >
-            {profiling ? (
-              <><Loader2 size={13} className="animate-spin" /> Profiling...</>
-            ) : (
-              <><RefreshCw size={13} /> {profile ? 'Re-profile' : 'Profile Dataset'}</>
-            )}
-          </button>
+          {/* Profile / re-profile button + download */}
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => datasetService.download(id!, `${dataset.name}.csv`)}
+              className="btn-secondary flex items-center gap-2 text-xs py-2.5 px-4"
+              title="Download dataset as CSV"
+            >
+              <Download size={13} />
+              <span className="hidden sm:inline">Download</span>
+            </button>
+            <button
+              onClick={handleTriggerProfile}
+              disabled={profiling}
+              className="btn-primary flex items-center gap-2 text-xs py-2.5 px-5 disabled:opacity-60"
+            >
+              {profiling ? (
+                <><Loader2 size={13} className="animate-spin" /> Profiling...</>
+              ) : (
+                <><RefreshCw size={13} /> {profile ? 'Re-profile' : 'Profile Dataset'}</>
+              )}
+            </button>
+          </div>
         </div>
       </div>
 

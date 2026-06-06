@@ -51,6 +51,20 @@ const datasetService = {
   async delete(id: string): Promise<void> {
     await apiClient.delete(`/datasets/${id}`)
   },
+
+  async download(id: string, filename: string): Promise<void> {
+    const res = await apiClient.get(`/datasets/${id}/download`, {
+      responseType: 'blob',
+    })
+    const url = URL.createObjectURL(res.data as Blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = filename
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
+  },
 }
 
 export default datasetService

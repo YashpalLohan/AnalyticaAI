@@ -1,17 +1,20 @@
 """
 AnalyticaAI — Dataset Endpoints
 
-POST /datasets/upload       → upload file
-GET  /datasets              → list user's datasets
-GET  /datasets/{id}         → get single dataset
-PATCH /datasets/{id}        → rename dataset
-DELETE /datasets/{id}       → delete dataset + file
+POST /datasets/upload         → upload file
+GET  /datasets                → list user's datasets
+GET  /datasets/{id}           → get single dataset
+GET  /datasets/{id}/download  → download dataset file as CSV
+PATCH /datasets/{id}          → rename dataset
+DELETE /datasets/{id}         → delete dataset + file
 """
 from fastapi import APIRouter, Depends, UploadFile, File, status
+from fastapi.responses import Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.database import get_db
 from app.core.deps import get_current_user
+from app.core.storage import get_storage
 from app.models.user import User
 from app.schemas.dataset import DatasetResponse, DatasetListResponse, DatasetRenameRequest
 from app.services.dataset_service import (
@@ -44,6 +47,27 @@ async def list_all(
     """List all datasets belonging to the current user."""
     datasets = await list_datasets(current_user.id, db)
     return DatasetListResponse(datasets=datasets, total=len(datasets))
+
+
+@router.get("/{dataset_id}/download")
+async def download(
+    dataset_id: str,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Download the dataset file (returns the current version including any cleaning applied)."""
+    dataset = await get_dataset(dataset_id, current_user.id, db)
+    storage = get_storage()
+    content = await storage.download(dataset.storage_path)
+    safe_name = dataset.name.replace(" ", "_")[:60]
+    # Always serve as CSV since cleaning converts files to CSV
+    ext = dataset.file_extension if dataset.file_extension in ("csv", "txt") else "csv"
+    filename = f"{safe_name}.{ext}"
+    return Response(
+        content=content,
+        media_type="text/csv",
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
+    )
 
 
 @router.get("/{dataset_id}", response_model=DatasetResponse)
