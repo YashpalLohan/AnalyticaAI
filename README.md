@@ -4,6 +4,8 @@
 
 **Live Demo:** [https://analytica-ai-eta.vercel.app](https://analytica-ai-eta.vercel.app)
 
+![AnalyticaAI Landing Page](./image.png)
+
 AnalyticaAI is a full-stack, Agentic AI-powered analytics platform that enables users to upload structured datasets and interact with them using natural language. The platform removes the need for SQL queries, manual data cleaning, dashboard configuration, and statistical analysis expertise. Users can simply upload a dataset and ask questions, and the system automatically performs data profiling, cleaning, exploratory data analysis, dashboard creation, insight generation, forecasting, machine learning, and report generation.
 
 ---
