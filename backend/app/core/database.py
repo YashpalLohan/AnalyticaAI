@@ -1,6 +1,7 @@
 """
 AnalyticaAI — Database Engine & Session
 """
+import ssl
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase
 from app.core.config import settings
@@ -12,11 +13,21 @@ DATABASE_URL = settings.DATABASE_URL.replace(
     "postgres://", "postgresql+asyncpg://"
 )
 
+# Strip ?sslmode=require from URL — we pass SSL explicitly via connect_args
+# so asyncpg doesn't get a parameter it doesn't understand
+if "sslmode" in DATABASE_URL:
+    DATABASE_URL = DATABASE_URL.split("?")[0]
+
+# Use SSL in production (Neon/Supabase require it); skip locally
+_use_ssl = settings.APP_ENV == "production"
+_connect_args = {"ssl": True} if _use_ssl else {}
+
 engine = create_async_engine(
     DATABASE_URL,
     echo=settings.DEBUG,
     pool_size=settings.DATABASE_POOL_SIZE,
     max_overflow=20,
+    connect_args=_connect_args,
 )
 
 AsyncSessionLocal = async_sessionmaker(
