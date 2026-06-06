@@ -87,15 +87,3 @@ export default function App() {
     </>
   )
 }
-
-// Temporary placeholder for unbuilt pages
-// ComingSoon placeholder kept for settings route
-function ComingSoon({ label, phase }: { label: string; phase: number }) {
-  return (
-    <div className="max-w-[1200px] mx-auto px-6 py-20 text-center">
-      <p className="label-blue mb-3">Phase {phase}</p>
-      <h2 className="text-2xl font-black uppercase tracking-tight text-ink mb-3">{label}</h2>
-      <p className="text-sm text-ink-faint">This feature will be built in Phase {phase}.</p>
-    </div>
-  )
-}
