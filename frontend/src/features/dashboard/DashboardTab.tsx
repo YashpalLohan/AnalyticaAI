@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { LayoutDashboard, RefreshCw, Sparkles } from 'lucide-react'
 import toast from 'react-hot-toast'
 import dashboardService, {
@@ -62,9 +62,12 @@ export default function DashboardTab({ datasetId }: Props) {
   const [dashboard, setDashboard] = useState<Dashboard | null>(null)
   const [loading, setLoading] = useState(false)
   const { checkLimit, showModal, closeModal } = useGuestLimit()
+  const hasFetched = useRef(false)
 
-  // Try to load cached dashboard on mount
+  // Try to load cached dashboard on mount — only once
   useEffect(() => {
+    if (hasFetched.current) return
+    hasFetched.current = true
     dashboardService.get(datasetId)
       .then(setDashboard)
       .catch(() => { /* 404 = not generated yet */ })

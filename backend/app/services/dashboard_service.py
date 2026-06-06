@@ -342,15 +342,21 @@ async def generate_dashboard(
         # Fallback: build a simple dashboard without LLM
         config = _fallback_config(df, dataset.name)
 
-    # Enrich widgets with real data
-    widgets = []
-    for w in config.get("widgets", []):
-        # Ensure each widget has a stable ID
-        if not w.get("id"):
-            w["id"] = str(uuid.uuid4())
-        enriched = _enrich_widget(w, df)
-        if enriched is not None:
-            widgets.append(enriched)
+    # Enrich widgets with real data — run in thread to avoid blocking event loop
+    import asyncio as _asyncio
+    loop = _asyncio.get_event_loop()
+
+    def _enrich_all(widgets_raw):
+        result = []
+        for w in widgets_raw:
+            if not w.get("id"):
+                w["id"] = str(uuid.uuid4())
+            enriched = _enrich_widget(w, df)
+            if enriched is not None:
+                result.append(enriched)
+        return result
+
+    widgets = await loop.run_in_executor(None, lambda: _enrich_all(config.get("widgets", [])))
 
     if not widgets:
         raise HTTPException(

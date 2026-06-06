@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Sparkles, RefreshCw, FileText, FileDown, Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import insightsService, { InsightsResult } from '../../services/insights.service'
@@ -55,9 +55,12 @@ export default function InsightsTab({ datasetId, datasetName = 'dataset' }: Prop
   const [pdfLoading, setPdfLoading]   = useState(false)
   const [docxLoading, setDocxLoading] = useState(false)
   const { checkLimit, showModal, closeModal } = useGuestLimit()
+  const hasFetched = useRef(false)
 
-  // Load cached insights on mount
+  // Load cached insights on mount — only once
   useEffect(() => {
+    if (hasFetched.current) return
+    hasFetched.current = true
     insightsService.get(datasetId)
       .then(setResult)
       .catch(() => { /* 404 = not generated yet */ })

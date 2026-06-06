@@ -17,7 +17,7 @@ const insightsService = {
     const res = await apiClient.post<InsightsResult>(
       `/datasets/${datasetId}/insights`,
       null,
-      { timeout: 60000 },
+      { timeout: 120000 },  // LLM analysis can take time on Render free tier
     )
     return res.data
   },
