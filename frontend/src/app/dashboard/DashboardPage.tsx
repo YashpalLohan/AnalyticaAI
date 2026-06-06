@@ -5,10 +5,10 @@ import { useAuth } from '../../hooks/useAuth'
 import datasetService from '../../services/dataset.service'
 
 const quickActions = [
-  { tag: '01', icon: Upload,        label: 'Upload Dataset',  desc: 'CSV, XLSX, or JSON',       to: '/datasets',  built: true },
-  { tag: '02', icon: MessageSquare, label: 'Chat with Data',  desc: 'Ask anything',              to: '/chat',      built: true },
-  { tag: '03', icon: BarChart2,     label: 'View Analytics',  desc: 'EDA & auto dashboard',      to: '/analytics', built: true },
-  { tag: '04', icon: FileText,      label: 'Export Report',   desc: 'AI insights + PDF/DOCX',    to: '/reports',   built: true },
+  { tag: '01', icon: Upload,        label: 'Upload Dataset',  desc: 'CSV, XLSX, or JSON',      to: '/datasets'  },
+  { tag: '02', icon: MessageSquare, label: 'Chat with Data',  desc: 'Ask anything',             to: '/chat'      },
+  { tag: '03', icon: BarChart2,     label: 'View Analytics',  desc: 'EDA & auto dashboard',     to: '/analytics' },
+  { tag: '04', icon: FileText,      label: 'Export Report',   desc: 'AI insights + PDF/DOCX',   to: '/reports'   },
 ]
 
 export default function DashboardPage() {
@@ -55,46 +55,25 @@ export default function DashboardPage() {
         <p className="label mb-3">Quick Actions</p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
           {quickActions.map(a => (
-            a.built ? (
-              <button
-                key={a.tag}
-                onClick={() => navigate(a.to)}
-                className="bg-linen p-5 text-left flex items-center justify-between
-                           hover:bg-navy group transition-colors duration-100"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-9 h-9 border border-border flex items-center justify-center
-                                  group-hover:border-border-dark transition-colors">
-                    <a.icon size={14} className="text-ink-muted group-hover:text-blue transition-colors" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-wide text-ink
-                                  group-hover:text-linen transition-colors">{a.label}</p>
-                    <p className="text-xs text-ink-faint group-hover:text-linen/50 transition-colors mt-0.5">{a.desc}</p>
-                  </div>
+            <button
+              key={a.tag}
+              onClick={() => navigate(a.to)}
+              className="bg-linen p-5 text-left flex items-center justify-between
+                         hover:bg-navy group transition-colors duration-100"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-9 h-9 border border-border flex items-center justify-center
+                                group-hover:border-border-dark transition-colors">
+                  <a.icon size={14} className="text-ink-muted group-hover:text-blue transition-colors" />
                 </div>
-                <ChevronRight size={13} className="text-ink-faint group-hover:text-blue transition-colors" />
-              </button>
-            ) : (
-              <div
-                key={a.tag}
-                className="bg-linen p-5 flex items-center justify-between opacity-40 cursor-not-allowed select-none"
-                title="Coming soon"
-              >
-                <div className="flex items-center gap-4">
-                  <div className="w-9 h-9 border border-border flex items-center justify-center">
-                    <a.icon size={14} className="text-ink-muted" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-wide text-ink">{a.label}</p>
-                    <p className="text-xs text-ink-faint mt-0.5">{a.desc}</p>
-                  </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-wide text-ink
+                                group-hover:text-linen transition-colors">{a.label}</p>
+                  <p className="text-xs text-ink-faint group-hover:text-linen/50 transition-colors mt-0.5">{a.desc}</p>
                 </div>
-                <span className="text-[9px] font-bold uppercase tracking-widest text-ink-faint border border-ink-faint/30 px-1.5 py-0.5 leading-none">
-                  Soon
-                </span>
               </div>
-            )
+              <ChevronRight size={13} className="text-ink-faint group-hover:text-blue transition-colors" />
+            </button>
           ))}
         </div>
       </div>

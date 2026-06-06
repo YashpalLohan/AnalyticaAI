@@ -91,19 +91,19 @@ export default function DashboardTab({ datasetId }: Props) {
       <>
         {showModal && <GuestLimitModal onClose={closeModal} />}
         <div className="border border-border bg-linen p-16 text-center">
-        <LayoutDashboard size={36} className="text-ink-faint mx-auto mb-4" />
-        <p className="label-blue mb-2">AI Dashboard</p>
-        <p className="font-bold text-sm uppercase tracking-wide text-ink mb-2">
-          No Dashboard Yet
-        </p>
-        <p className="text-xs text-ink-faint max-w-sm mx-auto mb-6 leading-relaxed">
-          The AI will analyze your dataset and automatically choose the best
-          KPI cards and charts — no configuration needed.
-        </p>
-        <button onClick={handleGenerate} className="btn-primary text-xs py-2.5 px-6">
-          <Sparkles size={13} />
-          Generate Dashboard
-        </button>
+          <LayoutDashboard size={36} className="text-ink-faint mx-auto mb-4" />
+          <p className="label-blue mb-2">AI Dashboard</p>
+          <p className="font-bold text-sm uppercase tracking-wide text-ink mb-2">
+            No Dashboard Yet
+          </p>
+          <p className="text-xs text-ink-faint max-w-sm mx-auto mb-6 leading-relaxed">
+            The AI will analyze your dataset and automatically choose the best
+            KPI cards and charts — no configuration needed.
+          </p>
+          <button onClick={handleGenerate} className="btn-primary text-xs py-2.5 px-6">
+            <Sparkles size={13} />
+            Generate Dashboard
+          </button>
         </div>
       </>
     )

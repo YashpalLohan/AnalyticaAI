@@ -50,4 +50,6 @@ async def init_db():
         from app.models import dataset     # noqa: F401
         from app.models import dataset_profile  # noqa: F401
         from app.models import dataset_column   # noqa: F401
+        from app.models import chat_session     # noqa: F401
+        from app.models import chat_message     # noqa: F401
         await conn.run_sync(Base.metadata.create_all)

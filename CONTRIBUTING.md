@@ -7,7 +7,7 @@ Thanks for taking the time to contribute. Here's how to get set up and what to f
 ## Getting Started
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/your-username/analytica-ai.git`
+2. Clone your fork: `git clone https://github.com/YashpalLohan/AnalyticaAI.git`
 3. Create a branch: `git checkout -b feature/your-feature-name`
 4. Make your changes
 5. Push and open a pull request against `develop`
