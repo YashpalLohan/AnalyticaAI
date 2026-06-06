@@ -55,26 +55,6 @@ export default function Sidebar({ onNavigate }: Props) {
           )
         })}
       </nav>
-
-      <div className="border-t border-border">
-        <NavLink
-          to="/settings"
-          onClick={onNavigate}
-          className={({ isActive }) =>
-            `flex items-center gap-3 px-4 py-3.5 transition-colors ${isActive ? ACTIVE : INACTIVE}`
-          }
-        >
-          <Settings size={15} className="flex-shrink-0" />
-          <div className="min-w-0">
-            <p className="text-xs font-bold uppercase tracking-widest leading-none">
-              Settings
-            </p>
-            <p className="text-[10px] mt-0.5 normal-case tracking-normal font-normal opacity-60">
-              Account & info
-            </p>
-          </div>
-        </NavLink>
-      </div>
     </aside>
   )
 }
