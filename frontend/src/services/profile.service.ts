@@ -55,7 +55,11 @@ export interface CleaningFix {
 const profileService = {
   /** Trigger (or re-trigger) profiling for a dataset. */
   async triggerProfile(datasetId: string): Promise<DatasetProfile> {
-    const res = await apiClient.post<DatasetProfile>(`/datasets/${datasetId}/profile`)
+    const res = await apiClient.post<DatasetProfile>(
+      `/datasets/${datasetId}/profile`,
+      null,
+      { timeout: 120000 },  // profiling can be slow on large datasets
+    )
     return res.data
   },
 
@@ -70,6 +74,7 @@ const profileService = {
     const res = await apiClient.post<DatasetProfile>(
       `/datasets/${datasetId}/cleaning/apply`,
       { fixes },
+      { timeout: 120000 },  // cleaning + re-profile can be slow
     )
     return res.data
   },

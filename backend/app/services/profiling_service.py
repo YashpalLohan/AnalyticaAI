@@ -519,17 +519,43 @@ async def profile_dataset(
         # 4. Parse into DataFrame
         df = _load_df(content, dataset.file_extension)
 
-        # 5. Profile each column (pure Python — no DB)
-        column_profiles = [_profile_column(df, col) for col in df.columns]
+        # 4b. Sample large datasets for speed — profiling 50k rows is representative
+        # Full row count is still recorded from the original df
+        MAX_PROFILE_ROWS = 50_000
+        original_row_count = len(df)
+        if original_row_count > MAX_PROFILE_ROWS:
+            logger.info(f"Dataset {dataset_id} has {original_row_count} rows — sampling {MAX_PROFILE_ROWS} for profiling")
+            df_profile = df.sample(MAX_PROFILE_ROWS, random_state=42)
+        else:
+            df_profile = df
+
+        # 5. Profile each column — run CPU-heavy pandas work in a thread
+        # so it doesn't block the async event loop
+        import asyncio
+        loop = asyncio.get_event_loop()
+
+        def _run_profiling():
+            cols = [_profile_column(df_profile, col) for col in df_profile.columns]
+            score, dims = _calculate_health_score(df_profile)
+            suggestions = _build_cleaning_suggestions(df_profile, cols)
+            missing = int(df_profile.isnull().sum().sum())
+            dups    = int(df_profile.duplicated().sum())
+            mem_mb  = round(float(df.memory_usage(deep=True).sum()) / (1024 ** 2), 3)
+            return cols, score, dims, suggestions, missing, dups, mem_mb
+
+        (
+            column_profiles,
+            health_score,
+            dimension_scores,
+            cleaning_suggestions,
+            missing_total,
+            dup_count,
+            memory_mb,
+        ) = await loop.run_in_executor(None, _run_profiling)
 
         # 6. Top-level metrics
-        row_count     = int(len(df))
-        col_count     = int(len(df.columns))
-        missing_total = int(df.isnull().sum().sum())
-        dup_count     = int(df.duplicated().sum())
-        memory_mb     = round(float(df.memory_usage(deep=True).sum()) / (1024 ** 2), 3)
-        health_score, dimension_scores = _calculate_health_score(df)
-        cleaning_suggestions = _build_cleaning_suggestions(df, column_profiles)
+        row_count = int(original_row_count)
+        col_count = int(len(df_profile.columns))
 
         # 7. JSON-sanitize everything before touching the DB
         column_profiles      = _json_clean(column_profiles)
