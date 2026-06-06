@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import {
   LayoutDashboard,
   Database,
@@ -9,43 +9,53 @@ import {
 } from 'lucide-react'
 
 const navItems = [
-  { to: '/dashboard', icon: LayoutDashboard, label: 'Home',      sub: 'Overview'          },
-  { to: '/datasets',  icon: Database,         label: 'Datasets',  sub: 'Upload & manage'   },
-  { to: '/chat',      icon: MessageSquare,    label: 'Chat',      sub: 'Ask your data'     },
-  { to: '/analytics', icon: BarChart2,        label: 'Analytics', sub: 'EDA & dashboard'   },
-  { to: '/reports',   icon: FileText,         label: 'Reports',   sub: 'Insights & export' },
+  { to: '/dashboard', icon: LayoutDashboard, label: 'Home',      sub: 'Overview',          exact: true  },
+  { to: '/datasets',  icon: Database,         label: 'Datasets',  sub: 'Upload & manage',   exact: false },
+  { to: '/chat',      icon: MessageSquare,    label: 'Chat',      sub: 'Ask your data',     exact: true  },
+  { to: '/analytics', icon: BarChart2,        label: 'Analytics', sub: 'EDA & dashboard',   exact: true  },
+  { to: '/reports',   icon: FileText,         label: 'Reports',   sub: 'Insights & export', exact: true  },
 ]
+
+const ACTIVE   = 'bg-navy text-linen border-r-2 border-blue'
+const INACTIVE = 'text-ink-faint hover:text-ink hover:bg-linen-dark'
 
 interface Props {
   onNavigate?: () => void
 }
 
 export default function Sidebar({ onNavigate }: Props) {
+  const location = useLocation()
+
   return (
-    <aside className="w-[220px] bg-linen border-r border-border flex flex-col h-full">
-      <nav className="flex-1 pt-4">
-        {navItems.map(item => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            end={item.to === '/dashboard'}
-            onClick={onNavigate}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-5 py-3 transition-colors ` +
-              (isActive
-                ? 'bg-navy text-linen border-r-2 border-blue'
-                : 'text-ink-faint hover:text-ink hover:bg-linen-dark')
-            }
-          >
-            <item.icon size={14} className="flex-shrink-0" />
-            <div className="min-w-0">
-              <p className="label leading-none">{item.label}</p>
-              <p className="text-[10px] text-ink-faint/70 mt-0.5 normal-case tracking-normal font-normal truncate">
-                {item.sub}
-              </p>
-            </div>
-          </NavLink>
-        ))}
+    <aside className="w-[220px] bg-linen border-r border-border flex flex-col h-full overflow-y-auto">
+      <nav className="flex-1 pt-2">
+        {navItems.map(item => {
+          // Datasets should stay active on /datasets/:id too
+          const isActive = item.exact
+            ? location.pathname === item.to
+            : location.pathname.startsWith(item.to)
+
+          return (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              onClick={onNavigate}
+              className={() =>
+                `flex items-center gap-3 px-4 py-3.5 transition-colors ${isActive ? ACTIVE : INACTIVE}`
+              }
+            >
+              <item.icon size={15} className="flex-shrink-0" />
+              <div className="min-w-0">
+                <p className="text-xs font-bold uppercase tracking-widest leading-none">
+                  {item.label}
+                </p>
+                <p className="text-[10px] mt-0.5 normal-case tracking-normal font-normal truncate opacity-60">
+                  {item.sub}
+                </p>
+              </div>
+            </NavLink>
+          )
+        })}
       </nav>
 
       <div className="border-t border-border">
@@ -53,16 +63,15 @@ export default function Sidebar({ onNavigate }: Props) {
           to="/settings"
           onClick={onNavigate}
           className={({ isActive }) =>
-            `flex items-center gap-3 px-5 py-3 transition-colors ` +
-            (isActive
-              ? 'bg-navy text-linen border-r-2 border-blue'
-              : 'text-ink-faint hover:text-ink hover:bg-linen-dark')
+            `flex items-center gap-3 px-4 py-3.5 transition-colors ${isActive ? ACTIVE : INACTIVE}`
           }
         >
-          <Settings size={14} className="flex-shrink-0" />
+          <Settings size={15} className="flex-shrink-0" />
           <div className="min-w-0">
-            <p className="label leading-none">Settings</p>
-            <p className="text-[10px] text-ink-faint/70 mt-0.5 normal-case tracking-normal font-normal">
+            <p className="text-xs font-bold uppercase tracking-widest leading-none">
+              Settings
+            </p>
+            <p className="text-[10px] mt-0.5 normal-case tracking-normal font-normal opacity-60">
               Account & info
             </p>
           </div>
