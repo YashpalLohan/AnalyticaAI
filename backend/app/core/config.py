@@ -2,7 +2,6 @@
 AnalyticaAI — Application Configuration
 """
 from pydantic_settings import BaseSettings
-from typing import List
 
 
 class Settings(BaseSettings):
@@ -53,7 +52,7 @@ class Settings(BaseSettings):
     MAX_UPLOAD_SIZE_MB: int = 100
 
     # Security
-    ALLOWED_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:5173"]
+    ALLOWED_ORIGINS: str = "http://localhost:3000,http://localhost:5173"
     RATE_LIMIT_PER_MINUTE: int = 100
     BCRYPT_ROUNDS: int = 12
 
