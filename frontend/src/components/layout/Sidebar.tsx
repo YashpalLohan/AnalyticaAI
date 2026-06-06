@@ -5,7 +5,6 @@ import {
   MessageSquare,
   BarChart2,
   FileText,
-  Settings,
 } from 'lucide-react'
 
 const navItems = [
@@ -30,7 +29,6 @@ export default function Sidebar({ onNavigate }: Props) {
     <aside className="w-[220px] bg-linen border-r border-border flex flex-col h-full overflow-y-auto">
       <nav className="flex-1 pt-2">
         {navItems.map(item => {
-          // Datasets should stay active on /datasets/:id too
           const isActive = item.exact
             ? location.pathname === item.to
             : location.pathname.startsWith(item.to)

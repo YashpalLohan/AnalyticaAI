@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
-import { LogOut, Menu, X } from 'lucide-react'
+import { Outlet, NavLink } from 'react-router-dom'
+import { LogOut, Menu, X, Settings } from 'lucide-react'
 import { useAuth } from '../../hooks/useAuth'
 import Sidebar from './Sidebar'
 import GuestBanner from '../GuestBanner'
@@ -28,8 +28,17 @@ export default function AppLayout() {
           </span>
         </div>
 
-        <div className="flex items-center gap-5">
-          <span className="label text-ink-faint hidden sm:block">{user?.email}</span>
+        <div className="flex items-center gap-4">
+          <span className="label text-ink-faint hidden sm:block truncate max-w-[200px]">{user?.email}</span>
+          <NavLink
+            to="/settings"
+            className={({ isActive }) =>
+              `p-1.5 transition-colors rounded-sm ${isActive ? 'text-blue' : 'text-ink-faint hover:text-ink'}`
+            }
+            title="Settings"
+          >
+            <Settings size={16} />
+          </NavLink>
           <button
             onClick={logout}
             className="flex items-center gap-1.5 label hover:text-ink transition-colors"
