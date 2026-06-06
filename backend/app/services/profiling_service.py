@@ -701,8 +701,17 @@ async def apply_cleaning(
                 df = df.drop_duplicates()
             elif action == "fill_median" and col and col in df.columns:
                 if df[col].dtype == object:
-                    df[col] = pd.to_numeric(df[col], errors='coerce')
-                if pd.api.types.is_numeric_dtype(df[col]):
+                    # String column — coerce to numeric; if all NaN after coerce,
+                    # fall back to fill_mode (most frequent value) instead
+                    numeric_attempt = pd.to_numeric(df[col], errors='coerce')
+                    if numeric_attempt.notna().sum() > 0:
+                        df[col] = numeric_attempt.fillna(numeric_attempt.median())
+                    else:
+                        # Truly categorical — fill with mode
+                        mode_series = df[col].mode()
+                        if not mode_series.empty:
+                            df[col] = df[col].fillna(mode_series[0])
+                elif pd.api.types.is_numeric_dtype(df[col]):
                     df[col] = df[col].fillna(df[col].median())
             elif action == "fill_mode" and col and col in df.columns:
                 mode_series = df[col].mode()
